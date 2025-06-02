@@ -2,7 +2,5 @@
     "buildCommand": "pnpm build",
     "installCommand": "pnpm install",
     "outputDirectory": ".next",
-    "ignoreCommand": "echo 'skipping'",
     "cleanUrls": true
-  }
-  
+}
