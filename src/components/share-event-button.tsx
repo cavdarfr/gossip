@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import {
     Dialog,
@@ -25,6 +26,8 @@ export function ShareEventButton({
 }: ShareEventButtonProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [copied, setCopied] = useState(false);
+    const t = useTranslations("event.share");
+    const eventT = useTranslations("event");
 
     // Create the shareable URL
     const shareUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/submit/${eventSlug}`;
@@ -57,20 +60,19 @@ export function ShareEventButton({
             <DialogTrigger asChild>
                 <Button variant="outline" size="sm">
                     <Share2 className="h-4 w-4" />
-                    <span className="hidden md:block md:ml-2">Share Event</span>
+                    <span className="hidden md:block md:ml-2">
+                        {eventT("shareEvent")}
+                    </span>
                 </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-md">
                 <DialogHeader>
-                    <DialogTitle>Share Event</DialogTitle>
-                    <DialogDescription>
-                        Share this link with others so they can submit stories
-                        for &quot;{eventTitle}&quot;
-                    </DialogDescription>
+                    <DialogTitle>{t("title")}</DialogTitle>
+                    <DialogDescription>{t("description")}</DialogDescription>
                 </DialogHeader>
                 <div className="space-y-4">
                     <div className="space-y-2">
-                        <Label htmlFor="share-url">Submission Link</Label>
+                        <Label htmlFor="share-url">{t("submissionLink")}</Label>
                         <div className="flex space-x-2">
                             <Input
                                 id="share-url"
@@ -96,18 +98,17 @@ export function ShareEventButton({
                         </div>
                         {copied && (
                             <p className="text-sm text-green-600">
-                                Link copied to clipboard!
+                                {t("linkCopied")}
                             </p>
                         )}
                     </div>
 
                     <div className="space-y-2">
-                        <Label>What others will see:</Label>
+                        <Label>{t("whatOthersWillSee")}</Label>
                         <div className="p-3 bg-muted rounded-lg text-sm">
                             <div className="font-medium">{eventTitle}</div>
                             <div className="text-muted-foreground">
-                                A public form where people can submit their
-                                stories for this event
+                                {t("publicFormDescription")}
                             </div>
                         </div>
                     </div>

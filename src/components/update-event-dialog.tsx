@@ -16,7 +16,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Edit2, Loader2 } from "lucide-react";
-import { updateEvent } from "@/app/dashboard/actions";
+import { updateEvent } from "@/app/[locale]/dashboard/actions";
 
 interface Event {
     id: string;

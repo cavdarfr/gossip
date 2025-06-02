@@ -1,0 +1,222 @@
+{
+    "common": {
+        "appName": "Gossip",
+        "dashboard": "Dashboard",
+        "signIn": "Sign In",
+        "signUp": "Sign Up",
+        "cancel": "Cancel",
+        "submit": "Submit",
+        "save": "Save",
+        "delete": "Delete",
+        "edit": "Edit",
+        "view": "View",
+        "back": "Back",
+        "loading": "Loading...",
+        "error": "Error",
+        "success": "Success",
+        "confirm": "Confirm",
+        "close": "Close"
+    },
+    "home": {
+        "welcome": "Welcome to Gossip",
+        "description": "A secure chat application powered by Clerk authentication",
+        "getStarted": "Get Started",
+        "signInPrompt": "Sign in or create an account to start using Gossip",
+        "secureAuth": "🔐 Secure Authentication",
+        "secureAuthDesc": "Your account is protected with industry-standard security",
+        "quickSetup": "⚡ Quick Setup",
+        "quickSetupDesc": "Get started in seconds with social login or email",
+        "welcomeBack": "Welcome back",
+        "authSuccessful": "Authentication Successful!",
+        "authSuccessfulDesc": "You're now signed in and ready to use all features of Gossip.",
+        "yourProfile": "Your Profile:",
+        "email": "Email:",
+        "userId": "User ID:",
+        "created": "Created:",
+        "nextSteps": "🚀 Next Steps",
+        "resources": "📚 Resources",
+        "nextStepsList": {
+            "envVars": "• Set up your Clerk environment variables",
+            "customizeAuth": "• Customize your authentication flow",
+            "protectedRoutes": "• Add protected routes and API endpoints",
+            "userManagement": "• Configure user management features"
+        },
+        "resourceLinks": {
+            "clerkDocs": "→ Clerk Documentation",
+            "nextjsGuide": "→ Next.js Integration Guide",
+            "uiComponents": "→ UI Components Reference"
+        }
+    },
+    "dashboard": {
+        "title": "Dashboard",
+        "welcomeBack": "Welcome back, {username}! Here's what's happening with your events.",
+        "errorLoading": "Error loading user data",
+        "stats": {
+            "totalEvents": "Total Events",
+            "totalEventsDesc": "Active events created",
+            "totalStories": "Total Stories",
+            "totalStoriesDesc": "Stories submitted",
+            "pendingReview": "Pending Review",
+            "pendingReviewDesc": "Awaiting your review",
+            "approved": "Approved",
+            "approvedDesc": "Stories approved"
+        },
+        "events": {
+            "title": "Your Events",
+            "description": "Manage and monitor your events and their stories.",
+            "noEvents": "No events yet",
+            "noEventsDesc": "Get started by creating your first event.",
+            "tableHeaders": {
+                "event": "Event",
+                "status": "Status",
+                "stories": "Stories",
+                "pending": "Pending",
+                "created": "Created",
+                "actions": "Actions"
+            },
+            "status": {
+                "active": "Active",
+                "inactive": "Inactive"
+            },
+            "actions": {
+                "view": "View",
+                "edit": "Edit",
+                "delete": "Delete"
+            },
+            "storiesCount": "stories",
+            "pending": "pending"
+        },
+        "createEvent": {
+            "button": "Create Event",
+            "title": "Create New Event",
+            "description": "Create a new event to start collecting stories from your audience.",
+            "form": {
+                "eventTitle": "Event Title",
+                "eventTitlePlaceholder": "Enter event title",
+                "description": "Description",
+                "descriptionPlaceholder": "Enter event description",
+                "creating": "Creating...",
+                "createEvent": "Create Event"
+            }
+        }
+    },
+    "event": {
+        "backToDashboard": "Back to Dashboard",
+        "shareEvent": "Share Event",
+        "readingMode": "Reading Mode",
+        "managementMode": "Management Mode",
+        "stats": {
+            "totalStories": "Total Stories",
+            "totalStoriesDesc": "Stories submitted",
+            "pendingReview": "Pending Review",
+            "pendingReviewDesc": "Awaiting review",
+            "approved": "Approved",
+            "approvedDesc": "Stories approved",
+            "rejected": "Rejected",
+            "rejectedDesc": "Stories rejected"
+        },
+        "stories": {
+            "title": "Submitted Stories",
+            "description": "Manage the stories submitted for this event.",
+            "noStories": "No stories submitted",
+            "noStoriesDesc": "Stories will appear here once submitted.",
+            "noApprovedStories": "No approved stories yet",
+            "noApprovedStoriesDesc": "Stories will appear here once they are approved.",
+            "tableHeaders": {
+                "story": "Story",
+                "submitter": "Submitter",
+                "status": "Status",
+                "submitted": "Submitted",
+                "actions": "Actions"
+            },
+            "status": {
+                "pending": "Pending",
+                "approved": "Approved",
+                "rejected": "Rejected",
+                "read": "Read"
+            },
+            "anonymous": "Anonymous",
+            "by": "by",
+            "noTags": "No tags",
+            "readFullStory": "Read Full Story"
+        },
+        "share": {
+            "title": "Share Event",
+            "description": "Share this link for people to submit their stories.",
+            "copyLink": "Copy Link",
+            "linkCopied": "Link copied!",
+            "submissionLink": "Submission Link",
+            "whatOthersWillSee": "What others will see:",
+            "publicFormDescription": "A public form where people can submit their stories for this event"
+        }
+    },
+    "story": {
+        "backToEvent": "Back to Event",
+        "submittedBy": "Submitted by",
+        "anonymous": "Anonymous",
+        "submittedOn": "Submitted on",
+        "status": "Status",
+        "tags": "Tags",
+        "noTags": "No tags",
+        "storyDetails": "Story Details",
+        "storyContent": "Story Content",
+        "actions": {
+            "review": "Review",
+            "approve": "Approve",
+            "reject": "Reject"
+        },
+        "review": {
+            "title": "Review Story",
+            "approve": "Approve Story",
+            "reject": "Reject Story",
+            "feedback": "Feedback (optional)",
+            "feedbackPlaceholder": "Provide feedback to the author...",
+            "submitting": "Submitting...",
+            "submitReview": "Submit Review"
+        }
+    },
+    "submit": {
+        "title": "Submit Your Story",
+        "description": "Share your story for {eventTitle}",
+        "form": {
+            "anonymous": "Submit anonymously",
+            "email": "Email Address",
+            "emailRequired": "Email is required for non-anonymous submissions",
+            "emailInvalid": "Please enter a valid email address",
+            "username": "Username",
+            "usernameRequired": "Username is required for non-anonymous submissions",
+            "storyTitle": "Story Title",
+            "storyTitleRequired": "Story title is required",
+            "storyTitlePlaceholder": "Enter your story title",
+            "storyContent": "Story Content",
+            "storyContentRequired": "Story content is required",
+            "storyContentPlaceholder": "Share your story here...",
+            "storyContentTooLong": "Story content must be less than 10,000 characters",
+            "tags": "Tags (optional)",
+            "tagsPlaceholder": "Add a tag",
+            "addTag": "Add Tag",
+            "maxTags": "Maximum 10 tags",
+            "submitting": "Submitting...",
+            "submitStory": "Submit Story",
+            "submitError": "Failed to submit story. Please try again."
+        },
+        "success": {
+            "title": "Story Submitted Successfully!",
+            "description": "Thank you for sharing your story. It will be reviewed and may be featured soon.",
+            "submitAnother": "Submit Another Story"
+        }
+    },
+    "errors": {
+        "required": "This field is required",
+        "invalidEmail": "Invalid email address",
+        "tooLong": "Too long",
+        "tooShort": "Too short",
+        "loadingError": "Loading error",
+        "submitError": "Submission error",
+        "networkError": "Network error"
+    },
+    "footer": {
+        "description": "The modern storytelling platform where communities come together to share experiences and connect with others.",
+        "rights": "All rights reserved"
+    }
+}

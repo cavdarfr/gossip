@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -28,6 +29,9 @@ export function StorySubmissionForm({ eventId }: StorySubmissionFormProps) {
     });
     const [newTag, setNewTag] = useState("");
     const [errors, setErrors] = useState<Record<string, string>>({});
+
+    const t = useTranslations("submit.form");
+    const success = useTranslations("submit.success");
 
     const handleInputChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -77,28 +81,25 @@ export function StorySubmissionForm({ eventId }: StorySubmissionFormProps) {
         const newErrors: Record<string, string> = {};
 
         if (!formData.anonymous && !formData.submitterEmail.trim()) {
-            newErrors.submitterEmail =
-                "Email is required for non-anonymous submissions";
+            newErrors.submitterEmail = t("emailRequired");
         }
         if (!formData.anonymous && !formData.submitterUsername.trim()) {
-            newErrors.submitterUsername =
-                "Username is required for non-anonymous submissions";
+            newErrors.submitterUsername = t("usernameRequired");
         }
         if (
             formData.submitterEmail &&
             !/\S+@\S+\.\S+/.test(formData.submitterEmail)
         ) {
-            newErrors.submitterEmail = "Please enter a valid email address";
+            newErrors.submitterEmail = t("emailInvalid");
         }
         if (!formData.title.trim()) {
-            newErrors.title = "Story title is required";
+            newErrors.title = t("storyTitleRequired");
         }
         if (!formData.content.trim()) {
-            newErrors.content = "Story content is required";
+            newErrors.content = t("storyContentRequired");
         }
         if (formData.content.length > 10000) {
-            newErrors.content =
-                "Story content must be less than 10,000 characters";
+            newErrors.content = t("storyContentTooLong");
         }
 
         setErrors(newErrors);
@@ -132,7 +133,7 @@ export function StorySubmissionForm({ eventId }: StorySubmissionFormProps) {
             setIsSubmitted(true);
         } catch (error) {
             console.error("Error submitting story:", error);
-            setErrors({ submit: "Failed to submit story. Please try again." });
+            setErrors({ submit: t("submitError") });
         } finally {
             setIsSubmitting(false);
         }
@@ -146,11 +147,10 @@ export function StorySubmissionForm({ eventId }: StorySubmissionFormProps) {
                         <CheckCircle className="mx-auto h-12 w-12 text-green-600" />
                         <div>
                             <h3 className="text-lg font-semibold">
-                                Story Submitted Successfully!
+                                {success("title")}
                             </h3>
                             <p className="text-muted-foreground">
-                                Thank you for sharing your story. It will be
-                                reviewed and may be featured soon.
+                                {success("description")}
                             </p>
                         </div>
                         <Button
@@ -167,7 +167,7 @@ export function StorySubmissionForm({ eventId }: StorySubmissionFormProps) {
                                 });
                             }}
                         >
-                            Submit Another Story
+                            {success("submitAnother")}
                         </Button>
                     </div>
                 </CardContent>
@@ -185,7 +185,7 @@ export function StorySubmissionForm({ eventId }: StorySubmissionFormProps) {
                     onCheckedChange={handleAnonymousChange}
                 />
                 <Label htmlFor="anonymous" className="text-sm font-medium">
-                    Submit anonymously
+                    {t("anonymous")}
                 </Label>
             </div>
 
@@ -194,14 +194,12 @@ export function StorySubmissionForm({ eventId }: StorySubmissionFormProps) {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
                         <Label htmlFor="submitterEmail">
-                            Email Address{" "}
-                            <span className="text-red-500">*</span>
+                            {t("email")} <span className="text-red-500">*</span>
                         </Label>
                         <Input
                             id="submitterEmail"
                             name="submitterEmail"
                             type="email"
-                            placeholder="your.email@example.com"
                             value={formData.submitterEmail}
                             onChange={handleInputChange}
                             className={
@@ -214,15 +212,14 @@ export function StorySubmissionForm({ eventId }: StorySubmissionFormProps) {
                             </p>
                         )}
                     </div>
-
                     <div className="space-y-2">
                         <Label htmlFor="submitterUsername">
-                            Display Name <span className="text-red-500">*</span>
+                            {t("username")}{" "}
+                            <span className="text-red-500">*</span>
                         </Label>
                         <Input
                             id="submitterUsername"
                             name="submitterUsername"
-                            placeholder="Your name or handle"
                             value={formData.submitterUsername}
                             onChange={handleInputChange}
                             className={
@@ -241,14 +238,14 @@ export function StorySubmissionForm({ eventId }: StorySubmissionFormProps) {
             {/* Story Title */}
             <div className="space-y-2">
                 <Label htmlFor="title">
-                    Story Title <span className="text-red-500">*</span>
+                    {t("storyTitle")} <span className="text-red-500">*</span>
                 </Label>
                 <Input
                     id="title"
                     name="title"
-                    placeholder="Give your story a compelling title"
                     value={formData.title}
                     onChange={handleInputChange}
+                    placeholder={t("storyTitlePlaceholder")}
                     className={errors.title ? "border-red-500" : ""}
                 />
                 {errors.title && (
@@ -259,87 +256,78 @@ export function StorySubmissionForm({ eventId }: StorySubmissionFormProps) {
             {/* Story Content */}
             <div className="space-y-2">
                 <Label htmlFor="content">
-                    Your Story <span className="text-red-500">*</span>
+                    {t("storyContent")} <span className="text-red-500">*</span>
                 </Label>
                 <Textarea
                     id="content"
                     name="content"
-                    placeholder="Share your story, experience, or thoughts..."
                     value={formData.content}
                     onChange={handleInputChange}
+                    placeholder={t("storyContentPlaceholder")}
                     className={`min-h-[200px] ${
                         errors.content ? "border-red-500" : ""
                     }`}
-                    maxLength={10000}
                 />
-                <div className="flex justify-between items-center">
-                    {errors.content && (
-                        <p className="text-sm text-red-500">{errors.content}</p>
-                    )}
-                    <p className="text-sm text-muted-foreground ml-auto">
-                        {formData.content.length}/10,000 characters
-                    </p>
+                <div className="flex justify-between text-sm text-muted-foreground">
+                    <span>
+                        {formData.content.length > 10000 && (
+                            <span className="text-red-500">
+                                {t("storyContentTooLong")}
+                            </span>
+                        )}
+                    </span>
+                    <span>{formData.content.length}/10,000</span>
                 </div>
+                {errors.content && (
+                    <p className="text-sm text-red-500">{errors.content}</p>
+                )}
             </div>
 
             {/* Tags */}
             <div className="space-y-2">
-                <Label>Tags (Optional)</Label>
-                <p className="text-sm text-muted-foreground">
-                    Add tags to help categorize your story
-                </p>
-
-                {/* Current Tags */}
-                <div className="flex flex-wrap gap-2">
-                    {formData.tags.map((tag, index) => (
-                        <Badge
-                            key={index}
-                            variant="outline"
-                            className="pl-2 pr-1"
-                        >
-                            {tag}
-                            <Button
-                                type="button"
-                                variant="ghost"
-                                size="sm"
-                                className="ml-1 h-4 w-4 p-0 hover:bg-destructive hover:text-destructive-foreground"
-                                onClick={() => handleRemoveTag(tag)}
-                            >
-                                <X className="h-3 w-3" />
-                            </Button>
-                        </Badge>
-                    ))}
-                </div>
-
-                {/* Add New Tag */}
+                <Label htmlFor="newTag">{t("tags")}</Label>
                 <div className="flex space-x-2">
                     <Input
-                        placeholder="Add a tag"
+                        id="newTag"
                         value={newTag}
                         onChange={(e) => setNewTag(e.target.value)}
                         onKeyPress={handleKeyPress}
+                        placeholder={t("tagsPlaceholder")}
                         disabled={formData.tags.length >= 10}
-                        maxLength={30}
                     />
                     <Button
                         type="button"
-                        variant="outline"
-                        size="sm"
                         onClick={handleAddTag}
-                        disabled={
-                            !newTag.trim() ||
-                            formData.tags.includes(newTag.trim()) ||
-                            formData.tags.length >= 10
-                        }
+                        disabled={!newTag.trim() || formData.tags.length >= 10}
+                        size="sm"
                     >
                         <Plus className="h-4 w-4" />
+                        {t("addTag")}
                     </Button>
                 </div>
                 {formData.tags.length >= 10 && (
-                    <p className="text-xs text-muted-foreground">
-                        Maximum 10 tags allowed
+                    <p className="text-sm text-muted-foreground">
+                        {t("maxTags")}
                     </p>
                 )}
+                <div className="flex flex-wrap gap-2">
+                    {formData.tags.map((tag) => (
+                        <Badge
+                            key={tag}
+                            variant="secondary"
+                            className="flex items-center space-x-1"
+                        >
+                            <span>{tag}</span>
+                            <button
+                                type="button"
+                                onClick={() => handleRemoveTag(tag)}
+                                className="ml-1 hover:text-red-500"
+                            >
+                                <X className="h-3 w-3" />
+                            </button>
+                        </Badge>
+                    ))}
+                </div>
             </div>
 
             {/* Submit Error */}
@@ -348,14 +336,19 @@ export function StorySubmissionForm({ eventId }: StorySubmissionFormProps) {
             )}
 
             {/* Submit Button */}
-            <Button type="submit" disabled={isSubmitting} className="w-full">
+            <Button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full"
+                size="lg"
+            >
                 {isSubmitting ? (
                     <>
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Submitting...
+                        {t("submitting")}
                     </>
                 ) : (
-                    "Submit Story"
+                    t("submitStory")
                 )}
             </Button>
         </form>

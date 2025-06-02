@@ -1,22 +1,29 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import createMiddleware from "next-intl/middleware";
+import { routing } from "./i18n/routing";
+
+const handleI18nRouting = createMiddleware(routing);
 
 const isProtectedRoute = createRouteMatcher([
-  '/dashboard(.*)',
-  '/api/events(.*)',
-  '/api/stories(.*)',
+    "/:locale/dashboard(.*)",
+    "/dashboard(.*)",
+    "/api/events(.*)",
+    "/api/stories(.*)",
 ]);
 
 export default clerkMiddleware(async (auth, req) => {
-  if (isProtectedRoute(req)) {
-    await auth.protect();
-  }
+    if (isProtectedRoute(req)) {
+        await auth.protect();
+    }
+
+    return handleI18nRouting(req);
 });
 
 export const config = {
-  matcher: [
-    // Skip Next.js internals and all static files, unless found in search params
-    "/((?!_next|[^?]*\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
-    // Always run for API routes
-    "/(api|trpc)(.*)",
-  ],
-}; 
+    matcher: [
+        // Match all routes except static files and Next.js internals
+        "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|css|js)$).*)",
+        // Always run for API routes
+        "/(api|trpc)(.*)",
+    ],
+};

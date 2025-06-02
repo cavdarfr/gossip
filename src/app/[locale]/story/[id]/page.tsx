@@ -1,5 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect, notFound } from "next/navigation";
+import { setRequestLocale } from "next-intl/server";
 import prisma from "@/lib/prisma";
 import { StoryPageClient } from "./story-page-client";
 
@@ -30,23 +31,26 @@ async function getStoryData(storyId: string, userId: string) {
     return story;
 }
 
-export default async function StoryPage({
-    params,
-}: {
-    params: Promise<{ id: string }>;
-}) {
+type Props = {
+    params: Promise<{ id: string; locale: string }>;
+};
+
+export default async function StoryPage({ params }: Props) {
     const { userId } = await auth();
+    const { id, locale } = await params;
+
+    // Enable static rendering
+    setRequestLocale(locale);
 
     if (!userId) {
         redirect("/sign-in");
     }
 
-    const { id } = await params;
     const story = await getStoryData(id, userId);
 
     if (!story) {
         notFound();
     }
 
-    return <StoryPageClient story={story} />;
+    return <StoryPageClient story={story} locale={locale} />;
 }

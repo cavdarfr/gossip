@@ -1,5 +1,7 @@
 import { auth, currentUser } from "@clerk/nextjs/server";
-import { redirect } from "next/navigation";
+import { redirect } from "@/i18n/navigation";
+import { getTranslations } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 import prisma from "@/lib/prisma";
 import { StoryStatus } from "@prisma/client";
 import {
@@ -23,7 +25,7 @@ import { Calendar, Users, Clock, CheckCircle, Eye } from "lucide-react";
 import { CreateEventDialog } from "./create-event-dialog";
 import { DeleteEventDialog } from "@/components/delete-event-dialog";
 import { UpdateEventDialog } from "@/components/update-event-dialog";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 
 async function getDashboardData(userId: string) {
     const user = await prisma.user.findUnique({
@@ -75,17 +77,28 @@ async function getDashboardData(userId: string) {
     return user;
 }
 
-export default async function DashboardPage() {
+type Props = {
+    params: Promise<{ locale: string }>;
+};
+
+export default async function DashboardPage({ params }: Props) {
+    const { locale } = await params;
+
+    // Enable static rendering
+    setRequestLocale(locale);
+
     const { userId } = await auth();
+    const t = await getTranslations("dashboard");
 
     if (!userId) {
-        redirect("/sign-in");
+        redirect({ href: "/sign-in", locale });
+        return; // This return is needed for TypeScript, though it won't be reached
     }
 
     const userData = await getDashboardData(userId);
 
     if (!userData) {
-        return <div>Error loading user data</div>;
+        return <div>{t("errorLoading")}</div>;
     }
 
     // Calculate statistics
@@ -113,34 +126,34 @@ export default async function DashboardPage() {
 
     const stats = [
         {
-            title: "Total Events",
+            title: t("stats.totalEvents"),
             value: totalEvents,
             icon: Calendar,
-            description: "Active events created",
+            description: t("stats.totalEventsDesc"),
             color: "text-blue-600",
             bgColor: "bg-blue-50",
         },
         {
-            title: "Total Stories",
+            title: t("stats.totalStories"),
             value: totalStories,
             icon: Users,
-            description: "Stories submitted",
+            description: t("stats.totalStoriesDesc"),
             color: "text-green-600",
             bgColor: "bg-green-50",
         },
         {
-            title: "Pending Review",
+            title: t("stats.pendingReview"),
             value: pendingStories,
             icon: Clock,
-            description: "Awaiting your review",
+            description: t("stats.pendingReviewDesc"),
             color: "text-yellow-600",
             bgColor: "bg-yellow-50",
         },
         {
-            title: "Approved",
+            title: t("stats.approved"),
             value: approvedStories,
             icon: CheckCircle,
-            description: "Stories approved",
+            description: t("stats.approvedDesc"),
             color: "text-purple-600",
             bgColor: "bg-purple-50",
         },
@@ -153,11 +166,10 @@ export default async function DashboardPage() {
                 <div className="flex items-center justify-between flex-wrap gap-4 mb-8">
                     <div className="space-y-1">
                         <h1 className="text-3xl font-bold tracking-tight">
-                            Dashboard
+                            {t("title")}
                         </h1>
                         <p className="text-muted-foreground">
-                            Welcome back, {userData.username}! Here&apos;s
-                            what&apos;s happening with your events.
+                            {t("welcomeBack", { username: userData.username })}
                         </p>
                     </div>
                     <div className="flex-shrink-0">
@@ -199,9 +211,9 @@ export default async function DashboardPage() {
                 {/* Events Section */}
                 <Card>
                     <CardHeader>
-                        <CardTitle>Your Events</CardTitle>
+                        <CardTitle>{t("events.title")}</CardTitle>
                         <CardDescription>
-                            Manage and monitor your events and their stories.
+                            {t("events.description")}
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
@@ -209,10 +221,10 @@ export default async function DashboardPage() {
                             <div className="text-center py-12">
                                 <Calendar className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
                                 <h3 className="text-lg font-semibold mb-2">
-                                    No events yet
+                                    {t("events.noEvents")}
                                 </h3>
                                 <p className="text-muted-foreground mb-4">
-                                    Get started by creating your first event.
+                                    {t("events.noEventsDesc")}
                                 </p>
                                 <CreateEventDialog />
                             </div>
@@ -223,13 +235,35 @@ export default async function DashboardPage() {
                                     <Table>
                                         <TableHeader>
                                             <TableRow>
-                                                <TableHead>Event</TableHead>
-                                                <TableHead>Status</TableHead>
-                                                <TableHead>Stories</TableHead>
-                                                <TableHead>Pending</TableHead>
-                                                <TableHead>Created</TableHead>
+                                                <TableHead>
+                                                    {t(
+                                                        "events.tableHeaders.event"
+                                                    )}
+                                                </TableHead>
+                                                <TableHead>
+                                                    {t(
+                                                        "events.tableHeaders.status"
+                                                    )}
+                                                </TableHead>
+                                                <TableHead>
+                                                    {t(
+                                                        "events.tableHeaders.stories"
+                                                    )}
+                                                </TableHead>
+                                                <TableHead>
+                                                    {t(
+                                                        "events.tableHeaders.pending"
+                                                    )}
+                                                </TableHead>
+                                                <TableHead>
+                                                    {t(
+                                                        "events.tableHeaders.created"
+                                                    )}
+                                                </TableHead>
                                                 <TableHead className="text-right">
-                                                    Actions
+                                                    {t(
+                                                        "events.tableHeaders.actions"
+                                                    )}
                                                 </TableHead>
                                             </TableRow>
                                         </TableHeader>
@@ -267,8 +301,12 @@ export default async function DashboardPage() {
                                                                 }
                                                             >
                                                                 {event.isActive
-                                                                    ? "Active"
-                                                                    : "Inactive"}
+                                                                    ? t(
+                                                                          "events.status.active"
+                                                                      )
+                                                                    : t(
+                                                                          "events.status.inactive"
+                                                                      )}
                                                             </Badge>
                                                         </TableCell>
                                                         <TableCell>
@@ -303,7 +341,9 @@ export default async function DashboardPage() {
                                                         <TableCell className="text-muted-foreground">
                                                             {new Date(
                                                                 event.createdAt
-                                                            ).toLocaleDateString()}
+                                                            ).toLocaleDateString(
+                                                                locale
+                                                            )}
                                                         </TableCell>
                                                         <TableCell className="text-right">
                                                             <div className="flex items-center justify-end space-x-1">
@@ -394,8 +434,12 @@ export default async function DashboardPage() {
                                                             className="text-xs"
                                                         >
                                                             {event.isActive
-                                                                ? "Active"
-                                                                : "Inactive"}
+                                                                ? t(
+                                                                      "events.status.active"
+                                                                  )
+                                                                : t(
+                                                                      "events.status.inactive"
+                                                                  )}
                                                         </Badge>
                                                         <div className="flex items-center space-x-1 text-xs text-muted-foreground">
                                                             <Users className="h-3 w-3" />
@@ -405,7 +449,9 @@ export default async function DashboardPage() {
                                                                         .stories
                                                                         .length
                                                                 }{" "}
-                                                                stories
+                                                                {t(
+                                                                    "events.storiesCount"
+                                                                )}
                                                             </span>
                                                         </div>
                                                         {eventPendingStories >
@@ -417,13 +463,17 @@ export default async function DashboardPage() {
                                                                 {
                                                                     eventPendingStories
                                                                 }{" "}
-                                                                pending
+                                                                {t(
+                                                                    "events.pending"
+                                                                )}
                                                             </Badge>
                                                         )}
                                                         <div className="text-xs text-muted-foreground">
                                                             {new Date(
                                                                 event.createdAt
-                                                            ).toLocaleDateString()}
+                                                            ).toLocaleDateString(
+                                                                locale
+                                                            )}
                                                         </div>
                                                     </div>
 
@@ -438,7 +488,9 @@ export default async function DashboardPage() {
                                                                 className="flex-1"
                                                             >
                                                                 <Eye className="mr-2 h-4 w-4" />
-                                                                View
+                                                                {t(
+                                                                    "events.actions.view"
+                                                                )}
                                                             </Button>
                                                         </Link>
                                                         <UpdateEventDialog

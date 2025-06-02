@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { BookOpen, Edit3 } from "lucide-react";
 
@@ -14,6 +15,7 @@ export function ReadingModeToggle({ className }: ReadingModeToggleProps) {
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const [isReadingMode, setIsReadingMode] = useState(false);
+    const t = useTranslations("event");
 
     // Check if reading mode is active from URL params
     useEffect(() => {
@@ -50,14 +52,14 @@ export function ReadingModeToggle({ className }: ReadingModeToggleProps) {
                 <>
                     <Edit3 className="h-4 w-4" />
                     <span className="hidden md:block md:ml-2">
-                        Edition Mode
+                        {t("managementMode")}
                     </span>
                 </>
             ) : (
                 <>
                     <BookOpen className="h-4 w-4" />
                     <span className=" hidden md:block md:ml-2">
-                        Reading Mode
+                        {t("readingMode")}
                     </span>
                 </>
             )}

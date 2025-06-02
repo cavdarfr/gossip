@@ -1,6 +1,7 @@
 "use client";
 
 import { useSearchParams, useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import {
     Card,
     CardContent,
@@ -60,12 +61,17 @@ interface Event {
 
 interface EventPageClientProps {
     event: Event;
+    locale: string;
 }
 
-export function EventPageClient({ event }: EventPageClientProps) {
+export function EventPageClient({ event, locale }: EventPageClientProps) {
     const searchParams = useSearchParams();
     const router = useRouter();
     const isReadingMode = searchParams.get("mode") === "reading";
+
+    const t = useTranslations("event");
+    const common = useTranslations("common");
+    const dashboard = useTranslations("dashboard.events.status");
 
     // Calculate statistics
     const totalStories = event.stories.length;
@@ -86,34 +92,34 @@ export function EventPageClient({ event }: EventPageClientProps) {
 
     const stats = [
         {
-            title: "Total Stories",
+            title: t("stats.totalStories"),
             value: totalStories,
             icon: Users,
-            description: "Stories submitted",
+            description: t("stats.totalStoriesDesc"),
             color: "text-blue-600",
             bgColor: "bg-blue-50",
         },
         {
-            title: "Pending Review",
+            title: t("stats.pendingReview"),
             value: pendingStories,
             icon: Clock,
-            description: "Awaiting review",
+            description: t("stats.pendingReviewDesc"),
             color: "text-yellow-600",
             bgColor: "bg-yellow-50",
         },
         {
-            title: "Approved",
+            title: t("stats.approved"),
             value: approvedStories,
             icon: CheckCircle,
-            description: "Stories approved",
+            description: t("stats.approvedDesc"),
             color: "text-green-600",
             bgColor: "bg-green-50",
         },
         {
-            title: "Rejected",
+            title: t("stats.rejected"),
             value: rejectedStories,
             icon: Calendar,
-            description: "Stories rejected",
+            description: t("stats.rejectedDesc"),
             color: "text-red-600",
             bgColor: "bg-red-50",
         },
@@ -127,19 +133,27 @@ export function EventPageClient({ event }: EventPageClientProps) {
                         variant="outline"
                         className="text-yellow-600 border-yellow-300"
                     >
-                        Pending
+                        {t("stories.status.pending")}
                     </Badge>
                 );
             case StoryStatus.APPROVED:
                 return (
                     <Badge variant="default" className="bg-green-600">
-                        Approved
+                        {t("stories.status.approved")}
                     </Badge>
                 );
             case StoryStatus.REJECTED:
-                return <Badge variant="destructive">Rejected</Badge>;
+                return (
+                    <Badge variant="destructive">
+                        {t("stories.status.rejected")}
+                    </Badge>
+                );
             case StoryStatus.READ:
-                return <Badge variant="secondary">Read</Badge>;
+                return (
+                    <Badge variant="secondary">
+                        {t("stories.status.read")}
+                    </Badge>
+                );
             default:
                 return <Badge variant="outline">Unknown</Badge>;
         }
@@ -150,14 +164,14 @@ export function EventPageClient({ event }: EventPageClientProps) {
         if (isReadingMode) {
             params.set("mode", "reading");
         }
-        return `/story/${storyId}${
+        return `/${locale}/story/${storyId}${
             params.toString() ? `?${params.toString()}` : ""
         }`;
     };
 
     const handleEventDeleted = () => {
         // Redirect to dashboard after successful deletion
-        router.push("/dashboard");
+        router.push(`/${locale}/dashboard`);
     };
 
     if (isReadingMode) {
@@ -173,8 +187,8 @@ export function EventPageClient({ event }: EventPageClientProps) {
                             <p className="text-lg text-muted-foreground">
                                 {event.description}
                             </p>
-                        </div>
                         <ReadingModeToggle />
+                        </div>
                     </div>
 
                     {/* Reading Mode Stories */}
@@ -185,11 +199,10 @@ export function EventPageClient({ event }: EventPageClientProps) {
                                     <div className="text-center py-12">
                                         <BookOpen className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
                                         <h3 className="text-lg font-semibold mb-2">
-                                            No approved stories yet
+                                            {t("stories.noApprovedStories")}
                                         </h3>
                                         <p className="text-muted-foreground">
-                                            Stories will appear here once they
-                                            are approved.
+                                            {t("stories.noApprovedStoriesDesc")}
                                         </p>
                                     </div>
                                 </CardContent>
@@ -218,7 +231,9 @@ export function EventPageClient({ event }: EventPageClientProps) {
                                                         <User className="h-4 w-4" />
                                                         <span>
                                                             {story.anonymous
-                                                                ? "Anonymous"
+                                                                ? t(
+                                                                      "stories.anonymous"
+                                                                  )
                                                                 : story.submitterUsername}
                                                         </span>
                                                     </div>
@@ -269,7 +284,7 @@ export function EventPageClient({ event }: EventPageClientProps) {
                                                     size="sm"
                                                 >
                                                     <Eye className="mr-2 h-4 w-4" />
-                                                    Read Full Story
+                                                    {t("stories.readFullStory")}
                                                 </Button>
                                             </Link>
                                         </div>
@@ -293,10 +308,10 @@ export function EventPageClient({ event }: EventPageClientProps) {
                     <div className="flex items-center justify-between">
                         <div className="space-y-1">
                             <div className="flex items-center space-x-2">
-                                <Link href="/dashboard">
+                                <Link href={`/${locale}/dashboard`}>
                                     <Button variant="ghost" size="sm">
                                         <ArrowLeft className="mr-2 h-4 w-4" />
-                                        Back to Dashboard
+                                        {t("backToDashboard")}
                                     </Button>
                                 </Link>
                             </div>
@@ -312,7 +327,9 @@ export function EventPageClient({ event }: EventPageClientProps) {
                         <Badge
                             variant={event.isActive ? "default" : "secondary"}
                         >
-                            {event.isActive ? "Active" : "Inactive"}
+                            {event.isActive
+                                ? dashboard("active")
+                                : dashboard("inactive")}
                         </Badge>
                     </div>
 
@@ -410,9 +427,9 @@ export function EventPageClient({ event }: EventPageClientProps) {
                 {/* Stories Section */}
                 <Card>
                     <CardHeader>
-                        <CardTitle>Stories</CardTitle>
+                        <CardTitle>{t("stories.title")}</CardTitle>
                         <CardDescription>
-                            Review and manage stories submitted for this event.
+                            {t("stories.description")}
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
@@ -420,11 +437,10 @@ export function EventPageClient({ event }: EventPageClientProps) {
                             <div className="text-center py-12">
                                 <Users className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
                                 <h3 className="text-lg font-semibold mb-2">
-                                    No stories yet
+                                    {t("stories.noStories")}
                                 </h3>
                                 <p className="text-muted-foreground">
-                                    Stories submitted to this event will appear
-                                    here.
+                                    {t("stories.noStoriesDesc")}
                                 </p>
                             </div>
                         ) : (
@@ -434,13 +450,31 @@ export function EventPageClient({ event }: EventPageClientProps) {
                                     <Table>
                                         <TableHeader>
                                             <TableRow>
-                                                <TableHead>Story</TableHead>
-                                                <TableHead>Submitter</TableHead>
-                                                <TableHead>Status</TableHead>
+                                                <TableHead>
+                                                    {t(
+                                                        "stories.tableHeaders.story"
+                                                    )}
+                                                </TableHead>
+                                                <TableHead>
+                                                    {t(
+                                                        "stories.tableHeaders.submitter"
+                                                    )}
+                                                </TableHead>
+                                                <TableHead>
+                                                    {t(
+                                                        "stories.tableHeaders.status"
+                                                    )}
+                                                </TableHead>
                                                 <TableHead>Tags</TableHead>
-                                                <TableHead>Submitted</TableHead>
+                                                <TableHead>
+                                                    {t(
+                                                        "stories.tableHeaders.submitted"
+                                                    )}
+                                                </TableHead>
                                                 <TableHead className="text-right">
-                                                    Actions
+                                                    {t(
+                                                        "stories.tableHeaders.actions"
+                                                    )}
                                                 </TableHead>
                                             </TableRow>
                                         </TableHeader>
@@ -467,7 +501,9 @@ export function EventPageClient({ event }: EventPageClientProps) {
                                                                 <User className="h-4 w-4 text-muted-foreground" />
                                                                 <span className="text-sm">
                                                                     {story.anonymous
-                                                                        ? "Anonymous"
+                                                                        ? t(
+                                                                              "stories.anonymous"
+                                                                          )
                                                                         : story.submitterUsername}
                                                                 </span>
                                                             </div>
@@ -514,7 +550,9 @@ export function EventPageClient({ event }: EventPageClientProps) {
                                                                     )
                                                             ) : (
                                                                 <span className="text-muted-foreground text-sm">
-                                                                    No tags
+                                                                    {t(
+                                                                        "stories.noTags"
+                                                                    )}
                                                                 </span>
                                                             )}
                                                             {story.tags.length >
@@ -551,7 +589,7 @@ export function EventPageClient({ event }: EventPageClientProps) {
                                                                 </Button>
                                                             </Link>
                                                             <Link
-                                                                href={`/story/${story.id}/review`}
+                                                                href={`/${locale}/story/${story.id}/review`}
                                                             >
                                                                 <Button
                                                                     variant="ghost"
@@ -599,7 +637,9 @@ export function EventPageClient({ event }: EventPageClientProps) {
                                                         <User className="h-3 w-3" />
                                                         <span>
                                                             {story.anonymous
-                                                                ? "Anonymous"
+                                                                ? t(
+                                                                      "stories.anonymous"
+                                                                  )
                                                                 : story.submitterUsername}
                                                         </span>
                                                     </div>
@@ -658,11 +698,11 @@ export function EventPageClient({ event }: EventPageClientProps) {
                                                             className="flex-1"
                                                         >
                                                             <Eye className="mr-2 h-4 w-4" />
-                                                            View
+                                                            {common("view")}
                                                         </Button>
                                                     </Link>
                                                     <Link
-                                                        href={`/story/${story.id}/review`}
+                                                        href={`/${locale}/story/${story.id}/review`}
                                                     >
                                                         <Button
                                                             variant="ghost"

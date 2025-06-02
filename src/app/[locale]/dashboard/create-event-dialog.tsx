@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import {
     Dialog,
@@ -18,6 +19,8 @@ import { createEvent } from "./actions";
 export function CreateEventDialog() {
     const [open, setOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const t = useTranslations("dashboard.createEvent");
+    const common = useTranslations("common");
 
     async function handleSubmit(formData: FormData) {
         setIsLoading(true);
@@ -37,33 +40,32 @@ export function CreateEventDialog() {
             <DialogTrigger asChild>
                 <Button>
                     <Plus className="mr-2 h-4 w-4" />
-                    Create Event
+                    {t("button")}
                 </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
-                    <DialogTitle>Create New Event</DialogTitle>
-                    <DialogDescription>
-                        Create a new event to start collecting stories from your
-                        audience.
-                    </DialogDescription>
+                    <DialogTitle>{t("title")}</DialogTitle>
+                    <DialogDescription>{t("description")}</DialogDescription>
                 </DialogHeader>
                 <form action={handleSubmit} className="space-y-4">
                     <div className="space-y-2">
-                        <Label htmlFor="title">Event Title</Label>
+                        <Label htmlFor="title">{t("form.eventTitle")}</Label>
                         <Input
                             id="title"
                             name="title"
-                            placeholder="Enter event title"
+                            placeholder={t("form.eventTitlePlaceholder")}
                             required
                         />
                     </div>
                     <div className="space-y-2">
-                        <Label htmlFor="description">Description</Label>
+                        <Label htmlFor="description">
+                            {t("form.description")}
+                        </Label>
                         <Input
                             id="description"
                             name="description"
-                            placeholder="Enter event description"
+                            placeholder={t("form.descriptionPlaceholder")}
                             required
                         />
                     </div>
@@ -73,10 +75,12 @@ export function CreateEventDialog() {
                             variant="outline"
                             onClick={() => setOpen(false)}
                         >
-                            Cancel
+                            {common("cancel")}
                         </Button>
                         <Button type="submit" disabled={isLoading}>
-                            {isLoading ? "Creating..." : "Create Event"}
+                            {isLoading
+                                ? t("form.creating")
+                                : t("form.createEvent")}
                         </Button>
                     </div>
                 </form>

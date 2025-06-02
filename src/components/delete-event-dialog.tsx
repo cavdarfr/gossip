@@ -12,7 +12,7 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog";
 import { Trash2, Loader2 } from "lucide-react";
-import { deleteEvent } from "@/app/dashboard/actions";
+import { deleteEvent } from "@/app/[locale]/dashboard/actions";
 
 interface DeleteEventDialogProps {
     eventId: string;

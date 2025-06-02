@@ -1,0 +1,222 @@
+{
+    "common": {
+        "appName": "Gossip",
+        "dashboard": "Tableau de bord",
+        "signIn": "Se connecter",
+        "signUp": "S'inscrire",
+        "cancel": "Annuler",
+        "submit": "Soumettre",
+        "save": "Enregistrer",
+        "delete": "Supprimer",
+        "edit": "Modifier",
+        "view": "Voir",
+        "back": "Retour",
+        "loading": "Chargement...",
+        "error": "Erreur",
+        "success": "Succès",
+        "confirm": "Confirmer",
+        "close": "Fermer"
+    },
+    "home": {
+        "welcome": "Bienvenue sur Gossip",
+        "description": "Une application de chat sécurisée propulsée par l'authentification Clerk",
+        "getStarted": "Commencer",
+        "signInPrompt": "Connectez-vous ou créez un compte pour commencer à utiliser Gossip",
+        "secureAuth": "🔐 Authentification sécurisée",
+        "secureAuthDesc": "Votre compte est protégé par une sécurité de niveau industriel",
+        "quickSetup": "⚡ Configuration rapide",
+        "quickSetupDesc": "Commencez en quelques secondes avec la connexion sociale ou par email",
+        "welcomeBack": "Bon retour",
+        "authSuccessful": "Authentification réussie !",
+        "authSuccessfulDesc": "Vous êtes maintenant connecté et prêt à utiliser toutes les fonctionnalités de Gossip.",
+        "yourProfile": "Votre profil :",
+        "email": "Email :",
+        "userId": "ID utilisateur :",
+        "created": "Créé :",
+        "nextSteps": "🚀 Prochaines étapes",
+        "resources": "📚 Ressources",
+        "nextStepsList": {
+            "envVars": "• Configurer vos variables d'environnement Clerk",
+            "customizeAuth": "• Personnaliser votre flux d'authentification",
+            "protectedRoutes": "• Ajouter des routes et points d'API protégés",
+            "userManagement": "• Configurer les fonctionnalités de gestion des utilisateurs"
+        },
+        "resourceLinks": {
+            "clerkDocs": "→ Documentation Clerk",
+            "nextjsGuide": "→ Guide d'intégration Next.js",
+            "uiComponents": "→ Référence des composants UI"
+        }
+    },
+    "dashboard": {
+        "title": "Tableau de bord",
+        "welcomeBack": "Bon retour, {username} ! Voici ce qui se passe avec vos événements.",
+        "errorLoading": "Erreur lors du chargement des données utilisateur",
+        "stats": {
+            "totalEvents": "Total des événements",
+            "totalEventsDesc": "Événements actifs créés",
+            "totalStories": "Total des histoires",
+            "totalStoriesDesc": "Histoires soumises",
+            "pendingReview": "En attente de révision",
+            "pendingReviewDesc": "En attente de votre révision",
+            "approved": "Approuvées",
+            "approvedDesc": "Histoires approuvées"
+        },
+        "events": {
+            "title": "Vos événements",
+            "description": "Gérez et surveillez vos événements et leurs histoires.",
+            "noEvents": "Aucun événement pour le moment",
+            "noEventsDesc": "Commencez par créer votre premier événement.",
+            "tableHeaders": {
+                "event": "Événement",
+                "status": "Statut",
+                "stories": "Histoires",
+                "pending": "En attente",
+                "created": "Créé",
+                "actions": "Actions"
+            },
+            "status": {
+                "active": "Actif",
+                "inactive": "Inactif"
+            },
+            "actions": {
+                "view": "Voir",
+                "edit": "Modifier",
+                "delete": "Supprimer"
+            },
+            "storiesCount": "histoires",
+            "pending": "en attente"
+        },
+        "createEvent": {
+            "button": "Créer un événement",
+            "title": "Créer un nouvel événement",
+            "description": "Créez un nouvel événement pour commencer à collecter des histoires de votre audience.",
+            "form": {
+                "eventTitle": "Titre de l'événement",
+                "eventTitlePlaceholder": "Entrez le titre de l'événement",
+                "description": "Description",
+                "descriptionPlaceholder": "Entrez la description de l'événement",
+                "creating": "Création...",
+                "createEvent": "Créer l'événement"
+            }
+        }
+    },
+    "event": {
+        "backToDashboard": "Retour au tableau de bord",
+        "shareEvent": "Partager l'événement",
+        "readingMode": "Mode lecture",
+        "managementMode": "Mode gestion",
+        "stats": {
+            "totalStories": "Total des histoires",
+            "totalStoriesDesc": "Histoires soumises",
+            "pendingReview": "En attente de révision",
+            "pendingReviewDesc": "En attente de révision",
+            "approved": "Approuvées",
+            "approvedDesc": "Histoires approuvées",
+            "rejected": "Rejetées",
+            "rejectedDesc": "Histoires rejetées"
+        },
+        "stories": {
+            "title": "Histoires soumises",
+            "description": "Gérez les histoires soumises pour cet événement.",
+            "noStories": "Aucune histoire soumise",
+            "noStoriesDesc": "Les histoires apparaîtront ici une fois soumises.",
+            "noApprovedStories": "Aucune histoire approuvée pour le moment",
+            "noApprovedStoriesDesc": "Les histoires apparaîtront ici une fois approuvées.",
+            "tableHeaders": {
+                "story": "Histoire",
+                "submitter": "Soumetteur",
+                "status": "Statut",
+                "submitted": "Soumise",
+                "actions": "Actions"
+            },
+            "status": {
+                "pending": "En attente",
+                "approved": "Approuvée",
+                "rejected": "Rejetée",
+                "read": "Lue"
+            },
+            "anonymous": "Anonyme",
+            "by": "par",
+            "noTags": "Aucune étiquette",
+            "readFullStory": "Lire l'histoire complète"
+        },
+        "share": {
+            "title": "Partager l'événement",
+            "description": "Partagez ce lien pour que les gens puissent soumettre leurs histoires.",
+            "copyLink": "Copier le lien",
+            "linkCopied": "Lien copié !",
+            "submissionLink": "Lien de soumission",
+            "whatOthersWillSee": "Ce que les autres verront :",
+            "publicFormDescription": "Un formulaire public où les gens peuvent soumettre leurs histoires pour cet événement"
+        }
+    },
+    "story": {
+        "backToEvent": "Retour à l'événement",
+        "submittedBy": "Soumise par",
+        "anonymous": "Anonyme",
+        "submittedOn": "Soumise le",
+        "status": "Statut",
+        "tags": "Étiquettes",
+        "noTags": "Aucune étiquette",
+        "storyDetails": "Détails de l'histoire",
+        "storyContent": "Contenu de l'histoire",
+        "actions": {
+            "review": "Réviser",
+            "approve": "Approuver",
+            "reject": "Rejeter"
+        },
+        "review": {
+            "title": "Réviser l'histoire",
+            "approve": "Approuver l'histoire",
+            "reject": "Rejeter l'histoire",
+            "feedback": "Commentaires (optionnel)",
+            "feedbackPlaceholder": "Fournissez des commentaires pour l'auteur...",
+            "submitting": "Soumission...",
+            "submitReview": "Soumettre la révision"
+        }
+    },
+    "submit": {
+        "title": "Soumettre votre histoire",
+        "description": "Partagez votre histoire pour {eventTitle}",
+        "form": {
+            "anonymous": "Soumettre anonymement",
+            "email": "Adresse email",
+            "emailRequired": "L'email est requis pour les soumissions non anonymes",
+            "emailInvalid": "Veuillez entrer une adresse email valide",
+            "username": "Nom d'utilisateur",
+            "usernameRequired": "Le nom d'utilisateur est requis pour les soumissions non anonymes",
+            "storyTitle": "Titre de l'histoire",
+            "storyTitleRequired": "Le titre de l'histoire est requis",
+            "storyTitlePlaceholder": "Entrez le titre de votre histoire",
+            "storyContent": "Contenu de l'histoire",
+            "storyContentRequired": "Le contenu de l'histoire est requis",
+            "storyContentPlaceholder": "Partagez votre histoire ici...",
+            "storyContentTooLong": "Le contenu de l'histoire doit faire moins de 10 000 caractères",
+            "tags": "Étiquettes (optionnel)",
+            "tagsPlaceholder": "Ajoutez une étiquette",
+            "addTag": "Ajouter une étiquette",
+            "maxTags": "Maximum 10 étiquettes",
+            "submitting": "Soumission...",
+            "submitStory": "Soumettre l'histoire",
+            "submitError": "Échec de la soumission de l'histoire. Veuillez réessayer."
+        },
+        "success": {
+            "title": "Histoire soumise avec succès !",
+            "description": "Merci d'avoir partagé votre histoire. Elle sera révisée et pourrait être mise en avant prochainement.",
+            "submitAnother": "Soumettre une autre histoire"
+        }
+    },
+    "errors": {
+        "required": "Ce champ est requis",
+        "invalidEmail": "Adresse email invalide",
+        "tooLong": "Trop long",
+        "tooShort": "Trop court",
+        "loadingError": "Erreur lors du chargement",
+        "submitError": "Erreur lors de la soumission",
+        "networkError": "Erreur réseau"
+    },
+    "footer": {
+        "description": "La plateforme moderne de narration où les communautés se rassemblent pour partager des expériences et se connecter.",
+        "rights": "Tous droits réservés"
+    }
+}

@@ -1,4 +1,6 @@
 import { notFound } from "next/navigation";
+import { getTranslations } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 import prisma from "@/lib/prisma";
 import {
     Card,
@@ -28,13 +30,19 @@ async function getPublicEventData(slug: string) {
     return event;
 }
 
-export default async function PublicSubmissionPage({
-    params,
-}: {
-    params: Promise<{ slug: string }>;
-}) {
-    const { slug } = await params;
+type Props = {
+    params: Promise<{ slug: string; locale: string }>;
+};
+
+export default async function PublicSubmissionPage({ params }: Props) {
+    const { slug, locale } = await params;
+
+    // Enable static rendering
+    setRequestLocale(locale);
+
     const event = await getPublicEventData(slug);
+    const t = await getTranslations("submit");
+    const dashboard = await getTranslations("dashboard.events.status");
 
     if (!event) {
         notFound();
@@ -46,10 +54,10 @@ export default async function PublicSubmissionPage({
                 {/* Header */}
                 <div className="text-center mb-8">
                     <h1 className="text-3xl font-bold tracking-tight mb-2">
-                        Share Your Story
+                        {t("title")}
                     </h1>
                     <p className="text-muted-foreground">
-                        Submit your story for the event below
+                        {t("description", { eventTitle: event.title })}
                     </p>
                 </div>
 
@@ -60,7 +68,9 @@ export default async function PublicSubmissionPage({
                             <CardTitle className="text-xl">
                                 {event.title}
                             </CardTitle>
-                            <Badge variant="default">Active</Badge>
+                            <Badge variant="default">
+                                {dashboard("active")}
+                            </Badge>
                         </div>
                         <CardDescription>{event.description}</CardDescription>
                     </CardHeader>
@@ -69,11 +79,9 @@ export default async function PublicSubmissionPage({
                 {/* Submission Form */}
                 <Card>
                     <CardHeader>
-                        <CardTitle>Submit Your Story</CardTitle>
+                        <CardTitle>{t("title")}</CardTitle>
                         <CardDescription>
-                            Share your experience or thoughts related to this
-                            event. All submissions are reviewed before being
-                            published.
+                            {t("description", { eventTitle: event.title })}
                         </CardDescription>
                     </CardHeader>
                     <CardContent>

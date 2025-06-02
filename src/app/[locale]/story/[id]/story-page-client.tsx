@@ -1,6 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -27,11 +28,14 @@ interface Story {
 
 interface StoryPageClientProps {
     story: Story;
+    locale: string;
 }
 
-export function StoryPageClient({ story }: StoryPageClientProps) {
+export function StoryPageClient({ story, locale }: StoryPageClientProps) {
     const searchParams = useSearchParams();
     const isReadingMode = searchParams.get("mode") === "reading";
+    const t = useTranslations("story");
+    const eventT = useTranslations("event.stories");
 
     const getStatusBadge = (status: StoryStatus) => {
         switch (status) {
@@ -41,19 +45,25 @@ export function StoryPageClient({ story }: StoryPageClientProps) {
                         variant="outline"
                         className="text-yellow-600 border-yellow-300"
                     >
-                        Pending Review
+                        {eventT("status.pending")}
                     </Badge>
                 );
             case StoryStatus.APPROVED:
                 return (
                     <Badge variant="default" className="bg-green-600">
-                        Approved
+                        {eventT("status.approved")}
                     </Badge>
                 );
             case StoryStatus.REJECTED:
-                return <Badge variant="destructive">Rejected</Badge>;
+                return (
+                    <Badge variant="destructive">
+                        {eventT("status.rejected")}
+                    </Badge>
+                );
             case StoryStatus.READ:
-                return <Badge variant="secondary">Read</Badge>;
+                return (
+                    <Badge variant="secondary">{eventT("status.read")}</Badge>
+                );
             default:
                 return <Badge variant="outline">Unknown</Badge>;
         }
@@ -64,7 +74,7 @@ export function StoryPageClient({ story }: StoryPageClientProps) {
         if (isReadingMode) {
             params.set("mode", "reading");
         }
-        return `/event/${story.event.slug}${
+        return `/${locale}/event/${story.event.slug}${
             params.toString() ? `?${params.toString()}` : ""
         }`;
     };
@@ -85,7 +95,7 @@ export function StoryPageClient({ story }: StoryPageClientProps) {
                                 >
                                     <ArrowLeft className="h-4 w-4 flex-shrink-0" />
                                     <span className="truncate ml-2">
-                                        Back to {story.event.title}
+                                        {t("backToEvent")} {story.event.title}
                                     </span>
                                 </Button>
                             </Link>
@@ -105,7 +115,7 @@ export function StoryPageClient({ story }: StoryPageClientProps) {
                                 <User className="h-4 w-4 flex-shrink-0" />
                                 <span className="truncate">
                                     {story.anonymous
-                                        ? "Anonymous"
+                                        ? t("anonymous")
                                         : story.submitterUsername}
                                 </span>
                             </div>
@@ -156,7 +166,7 @@ export function StoryPageClient({ story }: StoryPageClientProps) {
                 <div className="space-y-4 mb-8">
                     {/* Back Button and Basic Info */}
                     <div className="flex items-center justify-between">
-                        <Link href={`/event/${story.event.slug}`}>
+                        <Link href={`/${locale}/event/${story.event.slug}`}>
                             <Button
                                 variant="ghost"
                                 size="sm"
@@ -164,7 +174,7 @@ export function StoryPageClient({ story }: StoryPageClientProps) {
                             >
                                 <ArrowLeft className="h-4 w-4 flex-shrink-0" />
                                 <span className="truncate ml-2">
-                                    Back to {story.event.title}
+                                    {t("backToEvent")} {story.event.title}
                                 </span>
                             </Button>
                         </Link>
@@ -186,10 +196,10 @@ export function StoryPageClient({ story }: StoryPageClientProps) {
                         {/* Desktop: Horizontal layout */}
                         <div className="hidden sm:flex items-center space-x-2">
                             <ReadingModeToggle />
-                            <Link href={`/story/${story.id}/review`}>
+                            <Link href={`/${locale}/story/${story.id}/review`}>
                                 <Button variant="outline" size="sm">
                                     <Edit2 className="mr-2 h-4 w-4" />
-                                    Review
+                                    {t("actions.review")}
                                 </Button>
                             </Link>
                         </div>
@@ -198,7 +208,7 @@ export function StoryPageClient({ story }: StoryPageClientProps) {
                         <div className="sm:hidden space-y-2">
                             <ReadingModeToggle />
                             <Link
-                                href={`/story/${story.id}/review`}
+                                href={`/${locale}/story/${story.id}/review`}
                                 className="block"
                             >
                                 <Button
@@ -207,7 +217,7 @@ export function StoryPageClient({ story }: StoryPageClientProps) {
                                     className="w-full"
                                 >
                                     <Edit2 className="mr-2 h-4 w-4" />
-                                    Review Story
+                                    {t("actions.review")}
                                 </Button>
                             </Link>
                         </div>
@@ -217,7 +227,9 @@ export function StoryPageClient({ story }: StoryPageClientProps) {
                 {/* Story Metadata - Responsive */}
                 <Card className="mb-6">
                     <CardHeader>
-                        <CardTitle className="text-lg">Story Details</CardTitle>
+                        <CardTitle className="text-lg">
+                            {t("storyDetails")}
+                        </CardTitle>
                     </CardHeader>
                     <CardContent>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -225,11 +237,11 @@ export function StoryPageClient({ story }: StoryPageClientProps) {
                                 <div className="flex items-center space-x-2">
                                     <User className="h-4 w-4 text-muted-foreground flex-shrink-0" />
                                     <span className="text-sm font-medium">
-                                        Submitter:
+                                        {t("submittedBy")}:
                                     </span>
                                     <span className="text-sm truncate">
                                         {story.anonymous
-                                            ? "Anonymous"
+                                            ? t("anonymous")
                                             : story.submitterUsername}
                                     </span>
                                 </div>
@@ -249,7 +261,7 @@ export function StoryPageClient({ story }: StoryPageClientProps) {
                                 <div className="flex items-center space-x-2">
                                     <Calendar className="h-4 w-4 text-muted-foreground flex-shrink-0" />
                                     <span className="text-sm font-medium">
-                                        Submitted:
+                                        {t("submittedOn")}:
                                     </span>
                                     <span className="text-sm text-muted-foreground">
                                         {new Date(
@@ -259,7 +271,7 @@ export function StoryPageClient({ story }: StoryPageClientProps) {
                                 </div>
                                 <div className="flex items-start space-x-2">
                                     <span className="text-sm font-medium flex-shrink-0">
-                                        Tags:
+                                        {t("tags")}:
                                     </span>
                                     <div className="flex flex-wrap gap-1">
                                         {story.tags.length > 0 ? (
@@ -274,7 +286,7 @@ export function StoryPageClient({ story }: StoryPageClientProps) {
                                             ))
                                         ) : (
                                             <span className="text-sm text-muted-foreground">
-                                                No tags
+                                                {t("noTags")}
                                             </span>
                                         )}
                                     </div>
@@ -287,7 +299,9 @@ export function StoryPageClient({ story }: StoryPageClientProps) {
                 {/* Story Content */}
                 <Card>
                     <CardHeader>
-                        <CardTitle className="text-lg">Story Content</CardTitle>
+                        <CardTitle className="text-lg">
+                            {t("storyContent")}
+                        </CardTitle>
                     </CardHeader>
                     <CardContent>
                         <div className="prose prose-sm max-w-none">
