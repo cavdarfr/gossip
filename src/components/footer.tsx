@@ -1,5 +1,6 @@
 import { useTranslations } from "next-intl";
-import { BookOpenTextIcon } from "lucide-react";
+import { Heart, Github, Twitter } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export function Footer() {
     const t = useTranslations("footer");
@@ -7,29 +8,57 @@ export function Footer() {
 
     return (
         <footer className="bg-gray-900 text-white" role="contentinfo">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-                {/* Brand Section */}
-                <div className="text-center space-y-4">
-                    <div className="flex items-center justify-center space-x-2">
-                        <BookOpenTextIcon className="w-8 h-8 text-blue-400" />
-                        <span className="text-xl font-bold">Gossip</span>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                {/* Main Footer Content */}
+                <div className="py-12">
+                    <div className="flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">
+                        {/* Brand Section */}
+                        <div className="text-center md:text-left">
+                            <div className="flex items-center justify-center md:justify-start space-x-3 mb-3">
+                                <span className="text-2xl font-bold">
+                                    Gossip
+                                </span>
+                            </div>
+                            <p className="text-gray-300 text-sm leading-relaxed max-w-md">
+                                {t("description")}
+                            </p>
+                        </div>
+
+                        {/* Social Links */}
+                        <div className="flex space-x-3 hidden">
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                className="border-gray-600 text-gray-300 hover:bg-white hover:text-gray-900"
+                            >
+                                <Github className="w-4 h-4 mr-2" />
+                                GitHub
+                            </Button>
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                className="border-gray-600 text-gray-300 hover:bg-white hover:text-gray-900"
+                            >
+                                <Twitter className="w-4 h-4 mr-2" />
+                                Twitter
+                            </Button>
+                        </div>
                     </div>
-                    <p className="text-gray-300 text-sm leading-relaxed max-w-md mx-auto">
-                        {t("description")}
-                    </p>
                 </div>
 
                 {/* Bottom Section */}
-                <div className="border-t border-gray-800 mt-8 pt-8">
+                <div className="border-t border-gray-800 py-6">
                     <div className="text-center">
                         <div className="text-sm text-gray-400">
-                            <p>
-                                &copy; {currentYear} Gossip by{" "}
+                            <p className="flex items-center justify-center">
+                                &copy; {currentYear} Gossip. Made with{" "}
+                                <Heart className="w-4 h-4 mx-1 text-red-500" />
+                                by{" "}
                                 <a
                                     href="https://cavdar.fr"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="text-blue-400 hover:text-blue-300 transition-colors"
+                                    className="text-blue-400 hover:text-blue-300 transition-colors ml-1"
                                 >
                                     cavdar.fr
                                 </a>
@@ -39,28 +68,6 @@ export function Footer() {
                     </div>
                 </div>
             </div>
-
-            {/* Structured Data for Organization */}
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{
-                    __html: JSON.stringify({
-                        "@context": "https://schema.org",
-                        "@type": "Organization",
-                        name: "Gossip",
-                        url: "https://gossip.vercel.app",
-                        logo: "https://gossip.vercel.app/icon-512x512.png",
-                        description:
-                            "Modern storytelling platform where communities come together to share experiences and connect with others.",
-                        founder: {
-                            "@type": "Person",
-                            name: "cavdar.fr",
-                            url: "https://cavdar.fr",
-                        },
-                        foundingDate: currentYear.toString(),
-                    }),
-                }}
-            />
         </footer>
     );
 }

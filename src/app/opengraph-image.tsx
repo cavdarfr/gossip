@@ -14,15 +14,14 @@ export default async function Image() {
         (
             <div
                 style={{
-                    background:
-                        "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                    background: "white",
                     width: "100%",
                     height: "100%",
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
                     justifyContent: "center",
-                    color: "white",
+                    color: "black",
                     fontFamily: "system-ui, -apple-system, sans-serif",
                 }}
             >
@@ -36,22 +35,26 @@ export default async function Image() {
                 >
                     <div
                         style={{
-                            width: 80,
-                            height: 80,
-                            background: "rgba(255, 255, 255, 0.2)",
-                            borderRadius: 20,
+                            width: 120,
+                            height: 120,
+                            background: "black",
+                            color: "white",
+                            borderRadius: 24,
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "center",
-                            marginRight: 20,
+                            marginRight: 30,
+                            fontSize: 64,
+                            fontWeight: "bold",
                         }}
                     >
-                        📖
+                        G
                     </div>
                     <div
                         style={{
                             fontSize: 72,
                             fontWeight: "bold",
+                            color: "black",
                         }}
                     >
                         Gossip
@@ -63,7 +66,8 @@ export default async function Image() {
                         textAlign: "center",
                         maxWidth: 800,
                         lineHeight: 1.4,
-                        opacity: 0.9,
+                        opacity: 0.7,
+                        color: "black",
                     }}
                 >
                     Share Stories, Connect Communities
@@ -74,7 +78,8 @@ export default async function Image() {
                         textAlign: "center",
                         maxWidth: 600,
                         marginTop: 20,
-                        opacity: 0.8,
+                        opacity: 0.6,
+                        color: "black",
                     }}
                 >
                     The modern storytelling platform where communities come
@@ -86,7 +91,8 @@ export default async function Image() {
                         bottom: 40,
                         right: 40,
                         fontSize: 18,
-                        opacity: 0.7,
+                        opacity: 0.5,
+                        color: "black",
                     }}
                 >
                     gossip.vercel.app

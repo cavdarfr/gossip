@@ -19,9 +19,77 @@
     },
     "home": {
         "welcome": "Bienvenue sur Gossip",
-        "description": "Une application de chat sécurisée propulsée par l'authentification Clerk",
+        "heroTitle": "Partagez des histoires, connectez les communautés",
+        "heroSubtitle": "La plateforme de narration moderne où les communautés se rassemblent pour partager des expériences, se connecter avec d'autres et découvrir des histoires incroyables du monde entier.",
         "getStarted": "Commencer",
         "signInPrompt": "Connectez-vous ou créez un compte pour commencer à utiliser Gossip",
+        "learnMore": "En savoir plus",
+        "features": {
+            "title": "Tout ce dont vous avez besoin pour collecter et partager des histoires",
+            "subtitle": "Des fonctionnalités puissantes conçues pour rendre la narration simple et engageante",
+            "createEvents": {
+                "title": "Créer des événements",
+                "description": "Configurez des événements de narration pour collecter des histoires de votre communauté sur n'importe quel sujet ou occasion."
+            },
+            "collectStories": {
+                "title": "Collecter des histoires",
+                "description": "Partagez un lien simple et laissez les gens soumettre leurs histoires de manière anonyme ou avec leurs détails."
+            },
+            "moderateContent": {
+                "title": "Modérer le contenu",
+                "description": "Examinez, approuvez ou donnez des commentaires sur les histoires soumises pour maintenir la qualité et la pertinence."
+            },
+            "sharePublicly": {
+                "title": "Partager publiquement",
+                "description": "Créez de beaux affichages publics d'histoires approuvées pour que votre communauté puisse lire et apprécier."
+            }
+        },
+        "howItWorks": {
+            "title": "Comment fonctionne Gossip",
+            "subtitle": "Étapes simples pour commencer à collecter des histoires incroyables",
+            "step1": {
+                "title": "Créer un événement",
+                "description": "Configurez votre événement de narration avec un titre, une description et des paramètres personnalisés."
+            },
+            "step2": {
+                "title": "Partager le lien",
+                "description": "Envoyez le lien de votre événement à des amis, membres de la communauté, ou partagez-le publiquement."
+            },
+            "step3": {
+                "title": "Collecter des histoires",
+                "description": "Les gens soumettent leurs histoires en utilisant votre formulaire de soumission simple et beau."
+            },
+            "step4": {
+                "title": "Organiser et partager",
+                "description": "Examinez les soumissions, approuvez les meilleures et partagez-les avec votre communauté."
+            }
+        },
+        "useCases": {
+            "title": "Parfait pour chaque occasion",
+            "subtitle": "Des souvenirs personnels aux événements communautaires, Gossip s'adapte à vos besoins de narration",
+            "wedding": {
+                "title": "Souvenirs de mariage",
+                "description": "Collectez des histoires et souvenirs touchants de la famille et des amis pour le jour spécial."
+            },
+            "corporate": {
+                "title": "Team building",
+                "description": "Rassemblez des histoires de succès, des expériences et des témoignages des membres de l'équipe et des clients."
+            },
+            "community": {
+                "title": "Événements communautaires",
+                "description": "Documentez des événements locaux, festivals ou initiatives communautaires à travers des histoires partagées."
+            },
+            "education": {
+                "title": "Projets éducatifs",
+                "description": "Créez des projets de narration collaborative pour les étudiants et les programmes éducatifs."
+            }
+        },
+        "cta": {
+            "title": "Prêt à commencer à collecter des histoires ?",
+            "subtitle": "Rejoignez des milliers d'utilisateurs qui font confiance à Gossip pour capturer et partager leurs moments les plus importants.",
+            "signUp": "Créer votre premier événement",
+            "alreadyUser": "Vous avez déjà un compte ?"
+        },
         "secureAuth": "🔐 Authentification sécurisée",
         "secureAuthDesc": "Votre compte est protégé par une sécurité de niveau industriel",
         "quickSetup": "⚡ Configuration rapide",
@@ -36,15 +104,16 @@
         "nextSteps": "🚀 Prochaines étapes",
         "resources": "📚 Ressources",
         "nextStepsList": {
-            "envVars": "• Configurer vos variables d'environnement Clerk",
-            "customizeAuth": "• Personnaliser votre flux d'authentification",
-            "protectedRoutes": "• Ajouter des routes et points d'API protégés",
-            "userManagement": "• Configurer les fonctionnalités de gestion des utilisateurs"
+            "dashboard": "• Allez à votre tableau de bord pour créer votre premier événement",
+            "exploreFeatures": "• Explorez les fonctionnalités de collecte et modération d'histoires",
+            "shareEvents": "• Apprenez comment partager des événements et collecter des histoires",
+            "community": "• Rejoignez notre communauté pour des conseils et meilleures pratiques"
         },
         "resourceLinks": {
-            "clerkDocs": "→ Documentation Clerk",
-            "nextjsGuide": "→ Guide d'intégration Next.js",
-            "uiComponents": "→ Référence des composants UI"
+            "dashboard": "→ Aller au tableau de bord",
+            "docs": "→ Documentation",
+            "community": "→ Forum communautaire",
+            "support": "→ Obtenir de l'aide"
         }
     },
     "dashboard": {

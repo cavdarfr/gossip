@@ -3,17 +3,17 @@ import { ImageResponse } from "next/og";
 export const runtime = "edge";
 
 export const size = {
-    width: 32,
-    height: 32,
+    width: 192,
+    height: 192,
 };
 export const contentType = "image/png";
 
-export default function Icon() {
+export default function Icon192() {
     return new ImageResponse(
         (
             <div
                 style={{
-                    fontSize: 20,
+                    fontSize: 128,
                     background: "white",
                     width: "100%",
                     height: "100%",
@@ -23,7 +23,7 @@ export default function Icon() {
                     color: "black",
                     fontWeight: "bold",
                     fontFamily: "system-ui, -apple-system, sans-serif",
-                    border: "1px solid #e5e7eb",
+                    border: "2px solid #e5e7eb",
                 }}
             >
                 G

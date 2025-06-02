@@ -13,9 +13,9 @@ import { notFound } from "next/navigation";
 import { getMessages, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
-import { BookOpenTextIcon } from "lucide-react";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { Footer } from "@/components/footer";
+import { Button } from "@/components/ui/button";
 import "../globals.css";
 
 const geistSans = Geist({
@@ -119,8 +119,29 @@ export const metadata: Metadata = {
         // yahoo: undefined, // Add Yahoo verification if needed
     },
     other: {
-        "theme-color": "#3b82f6",
+        "theme-color": "#000000",
         "color-scheme": "light",
+    },
+    icons: {
+        icon: [
+            { url: "/favicon.svg", type: "image/svg+xml" },
+            { url: "/icon", sizes: "32x32", type: "image/png" },
+        ],
+        apple: [{ url: "/apple-icon", sizes: "180x180", type: "image/png" }],
+        other: [
+            {
+                rel: "icon",
+                url: "/icon-192",
+                sizes: "192x192",
+                type: "image/png",
+            },
+            {
+                rel: "icon",
+                url: "/icon-512",
+                sizes: "512x512",
+                type: "image/png",
+            },
+        ],
     },
 };
 
@@ -148,50 +169,63 @@ export default async function LocaleLayout({ children, params }: Props) {
                     className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
                 >
                     <NextIntlClientProvider messages={messages}>
-                        <header className="border-b border-gray-200 bg-white shadow-sm">
+                        <header className="bg-white/95 backdrop-blur-sm border-b border-gray-200/50 sticky top-0 z-50">
                             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                                <div className="flex justify-between items-center h-16">
+                                <div className="flex justify-between items-center h-20">
                                     <div className="flex items-center space-x-8">
                                         <Link
                                             href="/"
-                                            className="text-xl font-semibold text-gray-900 whitespace-nowrap flex items-center gap-2"
+                                            className="text-2xl font-bold text-gray-900 whitespace-nowrap flex items-center gap-3 hover:opacity-80 transition-opacity"
                                         >
-                                            <BookOpenTextIcon className="w-6 h-6" />{" "}
                                             {t("appName")}
                                         </Link>
                                         <SignedIn>
-                                            <nav className="flex space-x-4">
+                                            <nav className="hidden md:flex space-x-1">
                                                 <Link
                                                     href="/dashboard"
-                                                    className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                                                    className="text-gray-600 hover:text-gray-900 hover:bg-gray-100 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200"
                                                 >
                                                     {t("dashboard")}
                                                 </Link>
                                             </nav>
                                         </SignedIn>
                                     </div>
-                                    <div className="flex items-center space-x-4">
+                                    <div className="flex items-center space-x-3">
                                         {/* Language Switcher */}
                                         <LanguageSwitcher
                                             currentLocale={locale}
                                         />
                                         <SignedOut>
-                                            <SignInButton mode="modal">
-                                                <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">
-                                                    {t("signIn")}
-                                                </button>
-                                            </SignInButton>
-                                            <SignUpButton mode="modal">
-                                                <button className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">
-                                                    {t("signUp")}
-                                                </button>
-                                            </SignUpButton>
+                                            <div className="flex items-center space-x-2">
+                                                <SignInButton mode="modal">
+                                                    <Button
+                                                        variant="ghost"
+                                                        size="sm"
+                                                        className="text-gray-600 hover:text-gray-900"
+                                                    >
+                                                        {t("signIn")}
+                                                    </Button>
+                                                </SignInButton>
+                                                <SignUpButton mode="modal">
+                                                    <Button
+                                                        size="sm"
+                                                        className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-md"
+                                                    >
+                                                        {t("signUp")}
+                                                    </Button>
+                                                </SignUpButton>
+                                            </div>
                                         </SignedOut>
                                         <SignedIn>
                                             <UserButton
                                                 appearance={{
                                                     elements: {
-                                                        avatarBox: "h-8 w-8",
+                                                        avatarBox:
+                                                            "h-10 w-10 ring-2 ring-blue-100 hover:ring-blue-200 transition-all",
+                                                        userButtonPopoverCard:
+                                                            "shadow-xl border-0",
+                                                        userButtonPopoverHeader:
+                                                            "bg-gradient-to-r from-blue-50 to-purple-50",
                                                     },
                                                 }}
                                             />

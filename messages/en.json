@@ -19,9 +19,77 @@
     },
     "home": {
         "welcome": "Welcome to Gossip",
-        "description": "A secure chat application powered by Clerk authentication",
+        "heroTitle": "Share Stories, Connect Communities",
+        "heroSubtitle": "The modern storytelling platform where communities come together to share experiences, connect with others, and discover amazing stories from around the world.",
         "getStarted": "Get Started",
         "signInPrompt": "Sign in or create an account to start using Gossip",
+        "learnMore": "Learn More",
+        "features": {
+            "title": "Everything you need to collect and share stories",
+            "subtitle": "Powerful features designed to make storytelling simple and engaging",
+            "createEvents": {
+                "title": "Create Events",
+                "description": "Set up storytelling events to collect stories from your community on any topic or occasion."
+            },
+            "collectStories": {
+                "title": "Collect Stories",
+                "description": "Share a simple link and let people submit their stories anonymously or with their details."
+            },
+            "moderateContent": {
+                "title": "Moderate Content",
+                "description": "Review, approve, or provide feedback on submitted stories to maintain quality and relevance."
+            },
+            "sharePublicly": {
+                "title": "Share Publicly",
+                "description": "Create beautiful public displays of approved stories for your community to read and enjoy."
+            }
+        },
+        "howItWorks": {
+            "title": "How Gossip Works",
+            "subtitle": "Simple steps to start collecting amazing stories",
+            "step1": {
+                "title": "Create an Event",
+                "description": "Set up your storytelling event with a title, description, and custom settings."
+            },
+            "step2": {
+                "title": "Share the Link",
+                "description": "Send your event link to friends, community members, or share it publicly."
+            },
+            "step3": {
+                "title": "Collect Stories",
+                "description": "People submit their stories using your simple, beautiful submission form."
+            },
+            "step4": {
+                "title": "Curate & Share",
+                "description": "Review submissions, approve the best ones, and share them with your community."
+            }
+        },
+        "useCases": {
+            "title": "Perfect for Every Occasion",
+            "subtitle": "From personal memories to community events, Gossip adapts to your storytelling needs",
+            "wedding": {
+                "title": "Wedding Memories",
+                "description": "Collect heartwarming stories and memories from family and friends for the special day."
+            },
+            "corporate": {
+                "title": "Team Building",
+                "description": "Gather success stories, experiences, and testimonials from team members and clients."
+            },
+            "community": {
+                "title": "Community Events",
+                "description": "Document local events, festivals, or community initiatives through shared stories."
+            },
+            "education": {
+                "title": "Educational Projects",
+                "description": "Create collaborative storytelling projects for students and educational programs."
+            }
+        },
+        "cta": {
+            "title": "Ready to Start Collecting Stories?",
+            "subtitle": "Join thousands of users who trust Gossip to capture and share their most important moments.",
+            "signUp": "Create Your First Event",
+            "alreadyUser": "Already have an account?"
+        },
         "secureAuth": "🔐 Secure Authentication",
         "secureAuthDesc": "Your account is protected with industry-standard security",
         "quickSetup": "⚡ Quick Setup",
@@ -36,15 +104,16 @@
         "nextSteps": "🚀 Next Steps",
         "resources": "📚 Resources",
         "nextStepsList": {
-            "envVars": "• Set up your Clerk environment variables",
-            "customizeAuth": "• Customize your authentication flow",
-            "protectedRoutes": "• Add protected routes and API endpoints",
-            "userManagement": "• Configure user management features"
+            "dashboard": "• Go to your dashboard to create your first event",
+            "exploreFeatures": "• Explore story collection and moderation features",
+            "shareEvents": "• Learn how to share events and collect stories",
+            "community": "• Join our community for tips and best practices"
         },
         "resourceLinks": {
-            "clerkDocs": "→ Clerk Documentation",
-            "nextjsGuide": "→ Next.js Integration Guide",
-            "uiComponents": "→ UI Components Reference"
+            "dashboard": "→ Go to Dashboard",
+            "docs": "→ Documentation",
+            "community": "→ Community Forum",
+            "support": "→ Get Support"
         }
     },
     "dashboard": {
