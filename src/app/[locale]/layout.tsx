@@ -17,6 +17,7 @@ import { LanguageSwitcher } from "@/components/language-switcher";
 import { Footer } from "@/components/footer";
 import { Button } from "@/components/ui/button";
 import "../globals.css";
+import { PlausibleAnalytics } from "@/components/analytics";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -202,6 +203,7 @@ export default async function LocaleLayout({ children, params }: Props) {
                         </header>
                         <main className="flex-1">{children}</main>
                         <Footer />
+                        <PlausibleAnalytics />
                     </NextIntlClientProvider>
                 </body>
             </html>
