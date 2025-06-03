@@ -1,6 +1,6 @@
 "use server";
 
-import { auth } from "@clerk/nextjs/server";
+import { auth, currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
@@ -25,15 +25,32 @@ export async function createEvent(formData: FormData) {
     });
 
     if (!user) {
-        const clerkUser = await auth();
-        if (clerkUser) {
-            user = await prisma.user.create({
-                data: {
-                    clerkId: userId,
-                    email: "", // Will be updated when needed
-                    username: "user",
-                },
+        const clerkUser = await currentUser();
+        if (clerkUser?.emailAddresses[0]?.emailAddress) {
+            const userEmail = clerkUser.emailAddresses[0].emailAddress;
+
+            // Try to find existing user by email
+            const existingUser = await prisma.user.findUnique({
+                where: { email: userEmail },
             });
+
+            if (existingUser) {
+                // Update the existing user's clerkId (transition from dev to prod)
+                user = await prisma.user.update({
+                    where: { id: existingUser.id },
+                    data: { clerkId: userId },
+                });
+            } else {
+                // Create new user if doesn't exist at all
+                user = await prisma.user.create({
+                    data: {
+                        clerkId: userId,
+                        email: userEmail,
+                        username:
+                            clerkUser.username || clerkUser.firstName || "user",
+                    },
+                });
+            }
         }
     }
 

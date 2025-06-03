@@ -30,15 +30,33 @@ export async function POST(request: NextRequest) {
 
         if (!user) {
             const clerkUser = await currentUser();
-            if (clerkUser) {
-                user = await prisma.user.create({
-                    data: {
-                        clerkId: userId,
-                        email: clerkUser.emailAddresses[0]?.emailAddress || "",
-                        username:
-                            clerkUser.username || clerkUser.firstName || "user",
-                    },
+            if (clerkUser?.emailAddresses[0]?.emailAddress) {
+                const userEmail = clerkUser.emailAddresses[0].emailAddress;
+
+                // Try to find existing user by email
+                const existingUser = await prisma.user.findUnique({
+                    where: { email: userEmail },
                 });
+
+                if (existingUser) {
+                    // Update the existing user's clerkId (transition from dev to prod)
+                    user = await prisma.user.update({
+                        where: { id: existingUser.id },
+                        data: { clerkId: userId },
+                    });
+                } else {
+                    // Create new user if doesn't exist at all
+                    user = await prisma.user.create({
+                        data: {
+                            clerkId: userId,
+                            email: userEmail,
+                            username:
+                                clerkUser.username ||
+                                clerkUser.firstName ||
+                                "user",
+                        },
+                    });
+                }
             } else {
                 return NextResponse.json(
                     { error: "User not found" },

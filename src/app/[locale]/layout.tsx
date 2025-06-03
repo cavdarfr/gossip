@@ -16,7 +16,6 @@ import { routing } from "@/i18n/routing";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { Footer } from "@/components/footer";
 import { Button } from "@/components/ui/button";
-import { DebugClerk } from "@/components/debug-clerk";
 import "../globals.css";
 
 const geistSans = Geist({
@@ -237,7 +236,6 @@ export default async function LocaleLayout({ children, params }: Props) {
                         </header>
                         <main className="flex-1">{children}</main>
                         <Footer />
-                        <DebugClerk />
                     </NextIntlClientProvider>
                 </body>
             </html>

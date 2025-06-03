@@ -28,7 +28,8 @@ import { UpdateEventDialog } from "@/components/update-event-dialog";
 import { Link } from "@/i18n/navigation";
 
 async function getDashboardData(userId: string) {
-    const user = await prisma.user.findUnique({
+    // First, try to find user by clerkId
+    let user = await prisma.user.findUnique({
         where: { clerkId: userId },
         include: {
             events: {
@@ -45,17 +46,15 @@ async function getDashboardData(userId: string) {
         },
     });
 
+    // If user not found by clerkId, try to find by email and update clerkId
     if (!user) {
-        // Create user if doesn't exist
         const clerkUser = await currentUser();
-        if (clerkUser) {
-            const newUser = await prisma.user.create({
-                data: {
-                    clerkId: userId,
-                    email: clerkUser.emailAddresses[0]?.emailAddress || "",
-                    username:
-                        clerkUser.username || clerkUser.firstName || "user",
-                },
+        if (clerkUser?.emailAddresses[0]?.emailAddress) {
+            const userEmail = clerkUser.emailAddresses[0].emailAddress;
+
+            // Try to find existing user by email
+            const existingUser = await prisma.user.findUnique({
+                where: { email: userEmail },
                 include: {
                     events: {
                         include: {
@@ -66,12 +65,56 @@ async function getDashboardData(userId: string) {
                                 },
                             },
                         },
+                        orderBy: { createdAt: "desc" },
                     },
                 },
             });
-            return newUser;
+
+            if (existingUser) {
+                // Update the existing user's clerkId (transition from dev to prod)
+                user = await prisma.user.update({
+                    where: { id: existingUser.id },
+                    data: { clerkId: userId },
+                    include: {
+                        events: {
+                            include: {
+                                stories: true,
+                                _count: {
+                                    select: {
+                                        stories: true,
+                                    },
+                                },
+                            },
+                            orderBy: { createdAt: "desc" },
+                        },
+                    },
+                });
+            } else {
+                // Create new user if doesn't exist at all
+                user = await prisma.user.create({
+                    data: {
+                        clerkId: userId,
+                        email: userEmail,
+                        username:
+                            clerkUser.username || clerkUser.firstName || "user",
+                    },
+                    include: {
+                        events: {
+                            include: {
+                                stories: true,
+                                _count: {
+                                    select: {
+                                        stories: true,
+                                    },
+                                },
+                            },
+                        },
+                    },
+                });
+            }
+        } else {
+            return null;
         }
-        return null;
     }
 
     return user;
