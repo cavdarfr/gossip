@@ -1,4 +1,9 @@
 {
+    "seo": {
+        "appName": "Gossip",
+        "title": "Gossip - Partagez des histoires, connectez les communautés françaises",
+        "description": "Gossip est une plateforme de narration moderne où les communautés françaises se rassemblent pour partager des expériences, se connecter avec d'autres et découvrir des histoires incroyables de France et du monde francophone."
+    },
     "common": {
         "appName": "Gossip",
         "dashboard": "Tableau de bord",

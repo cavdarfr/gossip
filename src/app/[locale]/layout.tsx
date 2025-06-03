@@ -28,122 +28,92 @@ const geistMono = Geist_Mono({
     subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-    metadataBase: new URL("https://gossip.vercel.app"),
-    title: {
-        default: "Gossip - Share Stories, Connect Communities",
-        template: "%s | Gossip",
-    },
-    description:
-        "Gossip is a modern storytelling platform where communities come together to share experiences, connect with others, and discover amazing stories from around the world.",
-    keywords: [
-        "gossip",
-        "stories",
-        "community",
-        "storytelling",
-        "social",
-        "sharing",
-        "connect",
-        "experiences",
-        "events",
-        "conversations",
-    ],
-    authors: [
-        {
-            name: "cavdar.fr",
-            url: "https://cavdar.fr",
-        },
-    ],
-    creator: "cavdar.fr",
-    publisher: "cavdar.fr",
-    formatDetection: {
-        email: false,
-        address: false,
-        telephone: false,
-    },
-    robots: {
-        index: true,
-        follow: true,
-        nocache: false,
-        googleBot: {
-            index: true,
-            follow: true,
-            noimageindex: false,
-            "max-video-preview": -1,
-            "max-image-preview": "large",
-            "max-snippet": -1,
-        },
-    },
-    openGraph: {
-        type: "website",
-        title: "Gossip - Share Stories, Connect Communities",
-        description:
-            "Gossip is a modern storytelling platform where communities come together to share experiences, connect with others, and discover amazing stories from around the world.",
-        url: "https://gossip.vercel.app",
-        siteName: "Gossip",
-        locale: "en_US",
-        images: [
-            {
-                url: "/og-image.png",
-                width: 1200,
-                height: 630,
-                alt: "Gossip - Share Stories, Connect Communities",
-                type: "image/png",
-            },
-        ],
-    },
-    twitter: {
-        card: "summary_large_image",
-        title: "Gossip - Share Stories, Connect Communities",
-        description:
-            "Gossip is a modern storytelling platform where communities come together to share experiences, connect with others, and discover amazing stories from around the world.",
-        creator: "@cavdar_fr",
-        images: [
-            {
-                url: "/og-image.png",
-                alt: "Gossip - Share Stories, Connect Communities",
-            },
-        ],
-    },
-    category: "social",
-    alternates: {
-        canonical: "https://gossip.vercel.app",
-        languages: {
-            "en-US": "https://gossip.vercel.app/en",
-            "fr-FR": "https://gossip.vercel.app/fr",
-        },
-    },
-    verification: {
-        google: undefined, // Add Google Search Console verification meta tag here when available
-        // yandex: undefined, // Add Yandex verification if needed
-        // yahoo: undefined, // Add Yahoo verification if needed
-    },
-    other: {
-        "theme-color": "#000000",
-        "color-scheme": "light",
-    },
-    icons: {
-        icon: [
-            { url: "/favicon.svg", type: "image/svg+xml" },
-            { url: "/icon", sizes: "32x32", type: "image/png" },
-        ],
-        apple: [{ url: "/apple-icon", sizes: "180x180", type: "image/png" }],
-        other: [
-            {
-                rel: "icon",
-                url: "/icon-192",
-                sizes: "192x192",
-                type: "image/png",
-            },
-            {
-                rel: "icon",
-                url: "/icon-512",
-                sizes: "512x512",
-                type: "image/png",
-            },
-        ],
-    },
+type LocaleParams = {
+    locale: string;
 };
+
+export async function generateMetadata({
+    params,
+}: {
+    params: Promise<LocaleParams>;
+}): Promise<Metadata> {
+    const { locale } = await params;
+    const t = await getTranslations({ locale, namespace: "seo" });
+
+    const isFrench = locale === "fr";
+    const baseUrl = "https://gossip.cavdar.fr";
+    const canonicalUrl = isFrench ? baseUrl : `${baseUrl}/en`;
+
+    return {
+        metadataBase: new URL(baseUrl),
+        title: {
+            default: t("title"),
+            template: `%s | ${t("appName")}`,
+        },
+        description: t("description"),
+        keywords: isFrench
+            ? [
+                  "gossip",
+                  "histoires",
+                  "récits",
+                  "communauté",
+                  "narration",
+                  "partage",
+                  "événements",
+                  "témoignages",
+                  "france",
+                  "francophone",
+              ]
+            : [
+                  "gossip",
+                  "stories",
+                  "community",
+                  "storytelling",
+                  "sharing",
+                  "events",
+                  "testimonials",
+                  "france",
+                  "french",
+              ],
+        openGraph: {
+            type: "website",
+            title: t("title"),
+            description: t("description"),
+            url: canonicalUrl,
+            siteName: t("appName"),
+            locale: isFrench ? "fr_FR" : "en_US",
+            images: [
+                {
+                    url: "/og-image.png",
+                    width: 1200,
+                    height: 630,
+                    alt: t("title"),
+                },
+            ],
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: t("title"),
+            description: t("description"),
+            creator: "@cavdar_fr",
+        },
+        alternates: {
+            canonical: canonicalUrl,
+            languages: {
+                "fr-FR": baseUrl,
+                "en-US": `${baseUrl}/en`,
+                "x-default": baseUrl,
+            },
+        },
+        other: {
+            ...(isFrench && {
+                "geo.region": "FR",
+                "geo.country": "France",
+            }),
+            "content-language": locale,
+        },
+    };
+}
 
 type Props = {
     children: React.ReactNode;
@@ -151,14 +121,11 @@ type Props = {
 };
 
 export default async function LocaleLayout({ children, params }: Props) {
-    // Ensure that the incoming `locale` is valid
     const { locale } = await params;
     if (!hasLocale(routing.locales, locale)) {
         notFound();
     }
 
-    // Providing all messages to the client
-    // side is the easiest way to get started
     const messages = await getMessages();
     const t = await getTranslations("common");
 
@@ -191,7 +158,6 @@ export default async function LocaleLayout({ children, params }: Props) {
                                         </SignedIn>
                                     </div>
                                     <div className="flex items-center space-x-3">
-                                        {/* Language Switcher */}
                                         <LanguageSwitcher
                                             currentLocale={locale}
                                         />

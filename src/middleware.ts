@@ -38,43 +38,8 @@ const isStaticRoute = (pathname: string) => {
     );
 };
 
-// Check if the path is a localized static route that should be redirected to root
-const isLocalizedStaticRoute = (pathname: string) => {
-    const staticPaths = [
-        "favicon.ico",
-        "icon",
-        "apple-icon",
-        "icon-192",
-        "icon-512",
-        "manifest.webmanifest",
-        "robots.txt",
-        "sitemap.xml",
-        "opengraph-image",
-        "favicon.svg",
-    ];
-
-    // Check if pathname matches /{locale}/{staticPath}
-    const pathParts = pathname.split("/").filter(Boolean);
-    if (pathParts.length === 2) {
-        const [locale, staticPath] = pathParts;
-        if (["en", "fr"].includes(locale) && staticPaths.includes(staticPath)) {
-            return staticPath;
-        }
-    }
-
-    return null;
-};
-
 export default clerkMiddleware(async (auth, req) => {
     const pathname = req.nextUrl.pathname;
-
-    // Check for localized static routes and redirect to root
-    const staticPath = isLocalizedStaticRoute(pathname);
-    if (staticPath) {
-        const url = req.nextUrl.clone();
-        url.pathname = `/${staticPath}`;
-        return NextResponse.redirect(url);
-    }
 
     // Skip Clerk entirely for static routes
     if (isStaticRoute(pathname)) {
@@ -85,10 +50,17 @@ export default clerkMiddleware(async (auth, req) => {
         await auth.protect();
     }
 
-    return handleI18nRouting(req);
+    const response = handleI18nRouting(req);
+
+    // Add minimal SEO headers for performance
+    if (response) {
+        const locale = pathname.startsWith("/en") ? "en" : "fr";
+        response.headers.set("Content-Language", locale);
+    }
+
+    return response;
 });
 
 export const config = {
-    // Match all routes
     matcher: ["/((?!_next/static|_next/image).*)", "/"],
 };

@@ -1,4 +1,9 @@
 {
+    "seo": {
+        "appName": "Gossip",
+        "title": "Gossip - Share Stories, Connect French Communities",
+        "description": "Gossip is a modern storytelling platform where French and francophone communities come together to share experiences, connect with others, and discover amazing stories from France and around the world."
+    },
     "common": {
         "appName": "Gossip",
         "dashboard": "Dashboard",

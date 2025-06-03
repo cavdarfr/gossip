@@ -1,9 +1,10 @@
 import type { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-    const baseUrl = "https://gossip.vercel.app";
+    const baseUrl = "https://gossip.cavdar.fr";
 
     return [
+        // French homepage (default)
         {
             url: baseUrl,
             lastModified: new Date(),
@@ -11,17 +12,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
             priority: 1,
             alternates: {
                 languages: {
+                    fr: baseUrl,
                     en: `${baseUrl}/en`,
-                    fr: `${baseUrl}/fr`,
                 },
             },
         },
-        {
-            url: `${baseUrl}/en`,
-            lastModified: new Date(),
-            changeFrequency: "daily",
-            priority: 1,
-        },
+        // Language versions
         {
             url: `${baseUrl}/fr`,
             lastModified: new Date(),
@@ -29,11 +25,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
             priority: 1,
         },
         {
-            url: `${baseUrl}/en/dashboard`,
+            url: `${baseUrl}/en`,
             lastModified: new Date(),
-            changeFrequency: "weekly",
+            changeFrequency: "daily",
             priority: 0.8,
         },
+        // Core pages
         {
             url: `${baseUrl}/fr/dashboard`,
             lastModified: new Date(),
@@ -41,10 +38,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
             priority: 0.8,
         },
         {
-            url: `${baseUrl}/en/submit`,
+            url: `${baseUrl}/en/dashboard`,
             lastModified: new Date(),
             changeFrequency: "weekly",
-            priority: 0.7,
+            priority: 0.6,
         },
         {
             url: `${baseUrl}/fr/submit`,
@@ -52,7 +49,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
             changeFrequency: "weekly",
             priority: 0.7,
         },
-        // Note: Dynamic story and event pages would be added here
-        // when you have a database of content to iterate through
+        {
+            url: `${baseUrl}/en/submit`,
+            lastModified: new Date(),
+            changeFrequency: "weekly",
+            priority: 0.5,
+        },
     ];
 }
