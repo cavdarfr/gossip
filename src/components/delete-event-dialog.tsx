@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import {
     Dialog,
@@ -33,6 +34,8 @@ export function DeleteEventDialog({
 }: DeleteEventDialogProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
+    const t = useTranslations("deleteEvent");
+    const common = useTranslations("common");
 
     const handleDelete = async () => {
         setIsDeleting(true);
@@ -57,7 +60,7 @@ export function DeleteEventDialog({
         ) : (
             <Button variant="destructive" size={size}>
                 <Trash2 className="mr-2 h-4 w-4" />
-                Delete Event
+                {t("button")}
             </Button>
         );
 
@@ -66,10 +69,9 @@ export function DeleteEventDialog({
             <DialogTrigger asChild>{triggerButton}</DialogTrigger>
             <DialogContent className="sm:max-w-md">
                 <DialogHeader>
-                    <DialogTitle>Delete Event</DialogTitle>
+                    <DialogTitle>{t("title")}</DialogTitle>
                     <DialogDescription>
-                        Are you sure you want to delete &quot;{eventTitle}
-                        &quot;?
+                        {t("description", { eventTitle })}
                     </DialogDescription>
                 </DialogHeader>
 
@@ -77,20 +79,15 @@ export function DeleteEventDialog({
                     {storiesCount > 0 && (
                         <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
                             <p className="text-sm text-yellow-800">
-                                <strong>Warning:</strong> This event has{" "}
-                                {storiesCount}{" "}
-                                {storiesCount === 1 ? "story" : "stories"}. All
-                                stories will be permanently deleted along with
-                                the event.
+                                <strong>{common("warning")}:</strong>{" "}
+                                {t("warningMessage", { count: storiesCount })}
                             </p>
                         </div>
                     )}
 
                     <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
                         <p className="text-sm text-red-800">
-                            <strong>This action cannot be undone.</strong> All
-                            data associated with this event will be permanently
-                            lost.
+                            <strong>{t("permanentWarning")}</strong>
                         </p>
                     </div>
                 </div>
@@ -101,7 +98,7 @@ export function DeleteEventDialog({
                         onClick={() => setIsOpen(false)}
                         disabled={isDeleting}
                     >
-                        Cancel
+                        {t("cancel")}
                     </Button>
                     <Button
                         variant="destructive"
@@ -111,12 +108,12 @@ export function DeleteEventDialog({
                         {isDeleting ? (
                             <>
                                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                Deleting...
+                                {t("deleting")}
                             </>
                         ) : (
                             <>
                                 <Trash2 className="mr-2 h-4 w-4" />
-                                Delete Permanently
+                                {t("deletePermanently")}
                             </>
                         )}
                     </Button>

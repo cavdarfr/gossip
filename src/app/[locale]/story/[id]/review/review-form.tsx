@@ -15,6 +15,7 @@ import { Label } from "@/components/ui/label";
 import { CheckCircle, XCircle, Eye, Plus, X } from "lucide-react";
 import { StoryStatus } from "@prisma/client";
 import { updateStoryStatus, updateStoryTags } from "./actions";
+import { useTranslations } from "next-intl";
 
 interface Story {
     id: string;
@@ -28,6 +29,8 @@ interface ReviewFormProps {
 }
 
 export function ReviewForm({ story }: ReviewFormProps) {
+    const t = useTranslations("story.review");
+    const common = useTranslations("common");
     const [isUpdatingStatus, setIsUpdatingStatus] = useState(false);
     const [isUpdatingTags, setIsUpdatingTags] = useState(false);
     const [tags, setTags] = useState<string[]>(story.tags);
@@ -76,21 +79,36 @@ export function ReviewForm({ story }: ReviewFormProps) {
         }
     };
 
+    const getStatusDisplayName = (status: StoryStatus): string => {
+        switch (status) {
+            case StoryStatus.PENDING_REVIEW:
+                return t("status.pendingReview");
+            case StoryStatus.APPROVED:
+                return t("status.approved");
+            case StoryStatus.REJECTED:
+                return t("status.rejected");
+            case StoryStatus.READ:
+                return t("status.read");
+            default:
+                return common("unknownStatus");
+        }
+    };
+
     return (
         <>
             {/* Status Update */}
             <Card>
                 <CardHeader>
-                    <CardTitle className="text-lg">Update Status</CardTitle>
-                    <CardDescription>
-                        Change the review status of this story
-                    </CardDescription>
+                    <CardTitle className="text-lg">
+                        {t("updateStatusTitle")}
+                    </CardTitle>
+                    <CardDescription>{t("updateStatusDesc")}</CardDescription>
                 </CardHeader>
                 <CardContent>
                     <div className="space-y-4">
                         <div className="flex items-center space-x-2">
                             <span className="text-sm font-medium">
-                                Current Status:
+                                {t("currentStatus")}
                             </span>
                             <Badge
                                 variant={
@@ -110,18 +128,12 @@ export function ReviewForm({ story }: ReviewFormProps) {
                                         : ""
                                 }
                             >
-                                {story.status === StoryStatus.PENDING_REVIEW &&
-                                    "Pending Review"}
-                                {story.status === StoryStatus.APPROVED &&
-                                    "Approved"}
-                                {story.status === StoryStatus.REJECTED &&
-                                    "Rejected"}
-                                {story.status === StoryStatus.READ && "Read"}
+                                {getStatusDisplayName(story.status)}
                             </Badge>
                         </div>
 
                         <div className="space-y-2">
-                            <Label>Change Status</Label>
+                            <Label>{t("changeStatus")}</Label>
                             <div className="grid grid-cols-1 gap-2">
                                 <Button
                                     variant={
@@ -139,7 +151,7 @@ export function ReviewForm({ story }: ReviewFormProps) {
                                     }
                                 >
                                     <CheckCircle className="mr-2 h-4 w-4" />
-                                    Approve Story
+                                    {t("approveStory")}
                                 </Button>
                                 <Button
                                     variant={
@@ -157,7 +169,7 @@ export function ReviewForm({ story }: ReviewFormProps) {
                                     }
                                 >
                                     <XCircle className="mr-2 h-4 w-4" />
-                                    Reject Story
+                                    {t("rejectStory")}
                                 </Button>
                                 <Button
                                     variant={
@@ -175,7 +187,7 @@ export function ReviewForm({ story }: ReviewFormProps) {
                                     }
                                 >
                                     <Eye className="mr-2 h-4 w-4" />
-                                    Mark as Read
+                                    {t("markAsRead")}
                                 </Button>
                                 <Button
                                     variant={
@@ -196,7 +208,7 @@ export function ReviewForm({ story }: ReviewFormProps) {
                                             StoryStatus.PENDING_REVIEW
                                     }
                                 >
-                                    Reset to Pending
+                                    {t("resetToPending")}
                                 </Button>
                             </div>
                         </div>
@@ -207,16 +219,16 @@ export function ReviewForm({ story }: ReviewFormProps) {
             {/* Tags Management */}
             <Card>
                 <CardHeader>
-                    <CardTitle className="text-lg">Manage Tags</CardTitle>
-                    <CardDescription>
-                        Add or remove tags to categorize this story
-                    </CardDescription>
+                    <CardTitle className="text-lg">
+                        {t("manageTagsTitle")}
+                    </CardTitle>
+                    <CardDescription>{t("manageTagsDesc")}</CardDescription>
                 </CardHeader>
                 <CardContent>
                     <div className="space-y-4">
                         {/* Current Tags */}
                         <div className="space-y-2">
-                            <Label>Current Tags</Label>
+                            <Label>{t("currentTags")}</Label>
                             <div className="flex flex-wrap gap-2">
                                 {tags.length > 0 ? (
                                     tags.map((tag, index) => (
@@ -240,7 +252,7 @@ export function ReviewForm({ story }: ReviewFormProps) {
                                     ))
                                 ) : (
                                     <span className="text-muted-foreground text-sm">
-                                        No tags added
+                                        {t("noTagsAdded")}
                                     </span>
                                 )}
                             </div>
@@ -248,11 +260,11 @@ export function ReviewForm({ story }: ReviewFormProps) {
 
                         {/* Add New Tag */}
                         <div className="space-y-2">
-                            <Label htmlFor="newTag">Add New Tag</Label>
+                            <Label htmlFor="newTag">{t("addNewTag")}</Label>
                             <div className="flex space-x-2">
                                 <Input
                                     id="newTag"
-                                    placeholder="Enter tag name"
+                                    placeholder={t("enterTagName")}
                                     value={newTag}
                                     onChange={(e) => setNewTag(e.target.value)}
                                     onKeyPress={handleKeyPress}
@@ -274,7 +286,7 @@ export function ReviewForm({ story }: ReviewFormProps) {
                             </div>
                             {tags.length >= 10 && (
                                 <p className="text-xs text-muted-foreground">
-                                    Maximum 10 tags allowed
+                                    {t("maxTagsAllowed")}
                                 </p>
                             )}
                         </div>
@@ -289,7 +301,7 @@ export function ReviewForm({ story }: ReviewFormProps) {
                             }
                             className="w-full"
                         >
-                            {isUpdatingTags ? "Saving..." : "Save Tags"}
+                            {isUpdatingTags ? t("saving") : t("saveTags")}
                         </Button>
                     </div>
                 </CardContent>

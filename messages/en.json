@@ -15,7 +15,15 @@
         "error": "Error",
         "success": "Success",
         "confirm": "Confirm",
-        "close": "Close"
+        "close": "Close",
+        "warning": "Warning",
+        "create": "Create",
+        "update": "Update",
+        "next": "Next",
+        "previous": "Previous",
+        "yes": "Yes",
+        "no": "No",
+        "unknownStatus": "Unknown"
     },
     "home": {
         "welcome": "Welcome to Gossip",
@@ -167,7 +175,35 @@
                 "creating": "Creating...",
                 "createEvent": "Create Event"
             }
-        }
+        },
+        "deleteEvent": {
+            "button": "Delete Event",
+            "title": "Delete Event",
+            "description": "Are you sure you want to delete \"{eventTitle}\"?",
+            "warningMessage": "This event has {count} {count, plural, one {story} other {stories}}. All stories will be permanently deleted along with the event.",
+            "permanentWarning": "This action cannot be undone. All data associated with this event will be permanently lost.",
+            "cancel": "Cancel",
+            "deleting": "Deleting...",
+            "deletePermanently": "Delete Permanently"
+        },
+        "updateEvent": {
+            "button": "Edit Event",
+            "title": "Edit Event",
+            "description": "Update the event details below.",
+            "form": {
+                "eventTitle": "Event Title",
+                "eventTitlePlaceholder": "Enter event title",
+                "description": "Description",
+                "descriptionPlaceholder": "Describe your event",
+                "isActive": "Event is active (accepting submissions)",
+                "eventTitleRequired": "Event title is required",
+                "descriptionRequired": "Event description is required",
+                "submitError": "Failed to update event. Please try again.",
+                "updating": "Updating...",
+                "updateEvent": "Update Event"
+            }
+        },
+        "unknownStatus": "Unknown"
     },
     "event": {
         "backToDashboard": "Back to Dashboard",
@@ -236,12 +272,36 @@
         },
         "review": {
             "title": "Review Story",
-            "approve": "Approve Story",
-            "reject": "Reject Story",
-            "feedback": "Feedback (optional)",
-            "feedbackPlaceholder": "Provide feedback to the author...",
-            "submitting": "Submitting...",
-            "submitReview": "Submit Review"
+            "backToStory": "Back to Story",
+            "updateStatusTitle": "Update Status",
+            "updateStatusDesc": "Change the review status of this story",
+            "currentStatus": "Current Status:",
+            "changeStatus": "Change Status",
+            "approveStory": "Approve Story",
+            "rejectStory": "Reject Story",
+            "markAsRead": "Mark as Read",
+            "resetToPending": "Reset to Pending",
+            "storyDetails": "Story Details",
+            "submitter": "Submitter:",
+            "email": "Email:",
+            "submitted": "Submitted:",
+            "storyContent": "Story Content",
+            "manageTagsTitle": "Manage Tags",
+            "manageTagsDesc": "Add or remove tags to categorize this story",
+            "currentTags": "Current Tags",
+            "noTagsAdded": "No tags added",
+            "addNewTag": "Add New Tag",
+            "enterTagName": "Enter tag name",
+            "maxTagsAllowed": "Maximum 10 tags allowed",
+            "saveTags": "Save Tags",
+            "saving": "Saving...",
+            "status": {
+                "pendingReview": "Pending Review",
+                "approved": "Approved",
+                "rejected": "Rejected",
+                "read": "Read"
+            },
+            "updateFor": "Update status and manage tags for:"
         }
     },
     "submit": {
@@ -286,6 +346,8 @@
     },
     "footer": {
         "description": "The modern storytelling platform where communities come together to share experiences and connect with others.",
-        "rights": "All rights reserved"
+        "rights": "All rights reserved",
+        "madeWith": "Made with",
+        "by": "by"
     }
 }

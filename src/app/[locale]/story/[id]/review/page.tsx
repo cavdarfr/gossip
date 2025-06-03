@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, User, Mail, Calendar } from "lucide-react";
 import Link from "next/link";
 import { ReviewForm } from "./review-form";
+import { getTranslations } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 
 async function getStoryData(storyId: string, userId: string) {
     const user = await prisma.user.findUnique({
@@ -39,7 +41,7 @@ async function getStoryData(storyId: string, userId: string) {
 export default async function StoryReviewPage({
     params,
 }: {
-    params: Promise<{ id: string }>;
+    params: Promise<{ id: string; locale: string }>;
 }) {
     const { userId } = await auth();
 
@@ -47,7 +49,13 @@ export default async function StoryReviewPage({
         redirect("/sign-in");
     }
 
-    const { id } = await params;
+    const { id, locale } = await params;
+
+    // Enable static rendering
+    setRequestLocale(locale);
+
+    const t = await getTranslations("story.review");
+    const common = await getTranslations("common");
     const story = await getStoryData(id, userId);
 
     if (!story) {
@@ -58,25 +66,26 @@ export default async function StoryReviewPage({
         switch (status) {
             case StoryStatus.PENDING_REVIEW:
                 return (
-                    <Badge
-                        variant="outline"
-                        className="text-yellow-600 border-yellow-300"
-                    >
-                        Pending Review
+                    <Badge variant="outline" className="text-yellow-600">
+                        {t("status.pendingReview")}
                     </Badge>
                 );
             case StoryStatus.APPROVED:
                 return (
                     <Badge variant="default" className="bg-green-600">
-                        Approved
+                        {t("status.approved")}
                     </Badge>
                 );
             case StoryStatus.REJECTED:
-                return <Badge variant="destructive">Rejected</Badge>;
+                return (
+                    <Badge variant="destructive">{t("status.rejected")}</Badge>
+                );
             case StoryStatus.READ:
-                return <Badge variant="secondary">Read</Badge>;
+                return <Badge variant="secondary">{t("status.read")}</Badge>;
             default:
-                return <Badge variant="outline">Unknown</Badge>;
+                return (
+                    <Badge variant="outline">{common("unknownStatus")}</Badge>
+                );
         }
     };
 
@@ -90,15 +99,15 @@ export default async function StoryReviewPage({
                             <Link href={`/story/${story.id}`}>
                                 <Button variant="ghost" size="sm">
                                     <ArrowLeft className="mr-2 h-4 w-4" />
-                                    Back to Story
+                                    {t("review.backToStory")}
                                 </Button>
                             </Link>
                         </div>
                         <h1 className="text-3xl font-bold tracking-tight">
-                            Review Story
+                            {t("review.title")}
                         </h1>
                         <p className="text-muted-foreground">
-                            Update status and manage tags for:{" "}
+                            {t("review.updateFor")}{" "}
                             <strong>{story.title}</strong>
                         </p>
                     </div>
@@ -112,7 +121,7 @@ export default async function StoryReviewPage({
                         <Card>
                             <CardHeader>
                                 <CardTitle className="text-lg">
-                                    Story Details
+                                    {t("review.storyDetails")}
                                 </CardTitle>
                             </CardHeader>
                             <CardContent>
@@ -120,11 +129,11 @@ export default async function StoryReviewPage({
                                     <div className="flex items-center space-x-2">
                                         <User className="h-4 w-4 text-muted-foreground" />
                                         <span className="text-sm font-medium">
-                                            Submitter:
+                                            {t("review.submitter")}
                                         </span>
                                         <span className="text-sm">
                                             {story.anonymous
-                                                ? "Anonymous"
+                                                ? t("anonymous")
                                                 : story.submitterUsername}
                                         </span>
                                     </div>
@@ -132,7 +141,7 @@ export default async function StoryReviewPage({
                                         <div className="flex items-center space-x-2">
                                             <Mail className="h-4 w-4 text-muted-foreground" />
                                             <span className="text-sm font-medium">
-                                                Email:
+                                                {t("review.email")}
                                             </span>
                                             <span className="text-sm text-muted-foreground">
                                                 {story.submitterEmail}
@@ -142,7 +151,7 @@ export default async function StoryReviewPage({
                                     <div className="flex items-center space-x-2">
                                         <Calendar className="h-4 w-4 text-muted-foreground" />
                                         <span className="text-sm font-medium">
-                                            Submitted:
+                                            {t("review.submitted")}
                                         </span>
                                         <span className="text-sm text-muted-foreground">
                                             {new Date(
@@ -158,7 +167,7 @@ export default async function StoryReviewPage({
                         <Card>
                             <CardHeader>
                                 <CardTitle className="text-lg">
-                                    Story Content
+                                    {t("review.storyContent")}
                                 </CardTitle>
                             </CardHeader>
                             <CardContent>

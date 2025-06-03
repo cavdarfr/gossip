@@ -51,9 +51,9 @@ export function Footer() {
                     <div className="text-center">
                         <div className="text-sm text-gray-400">
                             <p className="flex items-center justify-center">
-                                &copy; {currentYear} Gossip. Made with{" "}
+                                &copy; {currentYear} Gossip. {t("madeWith")}{" "}
                                 <Heart className="w-4 h-4 mx-1 text-red-500" />
-                                by{" "}
+                                {t("by")}{" "}
                                 <a
                                     href="https://cavdar.fr"
                                     target="_blank"

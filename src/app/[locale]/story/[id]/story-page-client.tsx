@@ -36,6 +36,7 @@ export function StoryPageClient({ story, locale }: StoryPageClientProps) {
     const isReadingMode = searchParams.get("mode") === "reading";
     const t = useTranslations("story");
     const eventT = useTranslations("event.stories");
+    const common = useTranslations("common");
 
     const getStatusBadge = (status: StoryStatus) => {
         switch (status) {
@@ -65,7 +66,9 @@ export function StoryPageClient({ story, locale }: StoryPageClientProps) {
                     <Badge variant="secondary">{eventT("status.read")}</Badge>
                 );
             default:
-                return <Badge variant="outline">Unknown</Badge>;
+                return (
+                    <Badge variant="outline">{common("unknownStatus")}</Badge>
+                );
         }
     };
 

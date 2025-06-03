@@ -15,7 +15,15 @@
         "error": "Erreur",
         "success": "Succès",
         "confirm": "Confirmer",
-        "close": "Fermer"
+        "close": "Fermer",
+        "warning": "Attention",
+        "create": "Créer",
+        "update": "Mettre à jour",
+        "next": "Suivant",
+        "previous": "Précédent",
+        "yes": "Oui",
+        "no": "Non",
+        "unknownStatus": "Inconnu"
     },
     "home": {
         "welcome": "Bienvenue sur Gossip",
@@ -236,12 +244,36 @@
         },
         "review": {
             "title": "Réviser l'histoire",
-            "approve": "Approuver l'histoire",
-            "reject": "Rejeter l'histoire",
-            "feedback": "Commentaires (optionnel)",
-            "feedbackPlaceholder": "Fournissez des commentaires pour l'auteur...",
-            "submitting": "Soumission...",
-            "submitReview": "Soumettre la révision"
+            "backToStory": "Retour à l'histoire",
+            "updateStatusTitle": "Mettre à jour le statut",
+            "updateStatusDesc": "Modifier le statut de révision de cette histoire",
+            "currentStatus": "Statut actuel :",
+            "changeStatus": "Changer le statut",
+            "approveStory": "Approuver l'histoire",
+            "rejectStory": "Rejeter l'histoire",
+            "markAsRead": "Marquer comme lu",
+            "resetToPending": "Remettre en attente",
+            "storyDetails": "Détails de l'histoire",
+            "submitter": "Auteur :",
+            "email": "Email :",
+            "submitted": "Soumis le :",
+            "storyContent": "Contenu de l'histoire",
+            "manageTagsTitle": "Gérer les étiquettes",
+            "manageTagsDesc": "Ajouter ou supprimer des étiquettes pour catégoriser cette histoire",
+            "currentTags": "Étiquettes actuelles",
+            "noTagsAdded": "Aucune étiquette ajoutée",
+            "addNewTag": "Ajouter une nouvelle étiquette",
+            "enterTagName": "Saisir le nom de l'étiquette",
+            "maxTagsAllowed": "Maximum 10 étiquettes autorisées",
+            "saveTags": "Enregistrer les étiquettes",
+            "saving": "Enregistrement...",
+            "status": {
+                "pendingReview": "En attente de révision",
+                "approved": "Approuvé",
+                "rejected": "Rejeté",
+                "read": "Lu"
+            },
+            "updateFor": "Mettre à jour le statut et gérer les étiquettes pour :"
         }
     },
     "submit": {
@@ -286,6 +318,35 @@
     },
     "footer": {
         "description": "La plateforme moderne de narration où les communautés se rassemblent pour partager des expériences et se connecter.",
-        "rights": "Tous droits réservés"
+        "rights": "Tous droits réservés",
+        "madeWith": "Fait avec",
+        "by": "par"
+    },
+    "deleteEvent": {
+        "button": "Supprimer l'événement",
+        "title": "Supprimer l'événement",
+        "description": "Êtes-vous sûr de vouloir supprimer \"{eventTitle}\" ?",
+        "warningMessage": "Cet événement a {count} {count, plural, one {histoire} other {histoires}}. Toutes les histoires seront définitivement supprimées avec l'événement.",
+        "permanentWarning": "Cette action ne peut pas être annulée. Toutes les données associées à cet événement seront définitivement perdues.",
+        "cancel": "Annuler",
+        "deleting": "Suppression...",
+        "deletePermanently": "Supprimer définitivement"
+    },
+    "updateEvent": {
+        "button": "Modifier l'événement",
+        "title": "Modifier l'événement",
+        "description": "Mettez à jour les détails de l'événement ci-dessous.",
+        "form": {
+            "eventTitle": "Titre de l'événement",
+            "eventTitlePlaceholder": "Entrez le titre de l'événement",
+            "description": "Description",
+            "descriptionPlaceholder": "Décrivez votre événement",
+            "isActive": "L'événement est actif (accepte les soumissions)",
+            "eventTitleRequired": "Le titre de l'événement est requis",
+            "descriptionRequired": "La description de l'événement est requise",
+            "submitError": "Échec de la mise à jour de l'événement. Veuillez réessayer.",
+            "updating": "Mise à jour...",
+            "updateEvent": "Mettre à jour l'événement"
+        }
     }
 }

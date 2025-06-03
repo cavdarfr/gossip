@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import {
     Dialog,
@@ -45,6 +46,9 @@ export function UpdateEventDialog({
     });
     const [errors, setErrors] = useState<Record<string, string>>({});
 
+    const t = useTranslations("updateEvent");
+    const common = useTranslations("common");
+
     const handleInputChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
     ) => {
@@ -64,10 +68,10 @@ export function UpdateEventDialog({
         const newErrors: Record<string, string> = {};
 
         if (!formData.title.trim()) {
-            newErrors.title = "Event title is required";
+            newErrors.title = t("form.eventTitleRequired");
         }
         if (!formData.description.trim()) {
-            newErrors.description = "Event description is required";
+            newErrors.description = t("form.descriptionRequired");
         }
 
         setErrors(newErrors);
@@ -92,7 +96,7 @@ export function UpdateEventDialog({
             setIsOpen(false);
         } catch (error) {
             console.error("Error updating event:", error);
-            setErrors({ submit: "Failed to update event. Please try again." });
+            setErrors({ submit: t("form.submitError") });
         } finally {
             setIsUpdating(false);
         }
@@ -106,7 +110,7 @@ export function UpdateEventDialog({
         ) : (
             <Button variant="outline" size={size}>
                 <Edit2 className="mr-2 h-4 w-4" />
-                Edit Event
+                {t("button")}
             </Button>
         );
 
@@ -115,22 +119,21 @@ export function UpdateEventDialog({
             <DialogTrigger asChild>{triggerButton}</DialogTrigger>
             <DialogContent className="sm:max-w-md">
                 <DialogHeader>
-                    <DialogTitle>Edit Event</DialogTitle>
-                    <DialogDescription>
-                        Update the event details below.
-                    </DialogDescription>
+                    <DialogTitle>{t("title")}</DialogTitle>
+                    <DialogDescription>{t("description")}</DialogDescription>
                 </DialogHeader>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
                     {/* Event Title */}
                     <div className="space-y-2">
                         <Label htmlFor="title">
-                            Event Title <span className="text-red-500">*</span>
+                            {t("form.eventTitle")}{" "}
+                            <span className="text-red-500">*</span>
                         </Label>
                         <Input
                             id="title"
                             name="title"
-                            placeholder="Enter event title"
+                            placeholder={t("form.eventTitlePlaceholder")}
                             value={formData.title}
                             onChange={handleInputChange}
                             className={errors.title ? "border-red-500" : ""}
@@ -145,12 +148,13 @@ export function UpdateEventDialog({
                     {/* Event Description */}
                     <div className="space-y-2">
                         <Label htmlFor="description">
-                            Description <span className="text-red-500">*</span>
+                            {t("form.description")}{" "}
+                            <span className="text-red-500">*</span>
                         </Label>
                         <Textarea
                             id="description"
                             name="description"
-                            placeholder="Describe your event"
+                            placeholder={t("form.descriptionPlaceholder")}
                             value={formData.description}
                             onChange={handleInputChange}
                             className={`min-h-[100px] ${
@@ -175,7 +179,7 @@ export function UpdateEventDialog({
                             htmlFor="isActive"
                             className="text-sm font-medium"
                         >
-                            Event is active (accepting submissions)
+                            {t("form.isActive")}
                         </Label>
                     </div>
 
@@ -191,18 +195,18 @@ export function UpdateEventDialog({
                             onClick={() => setIsOpen(false)}
                             disabled={isUpdating}
                         >
-                            Cancel
+                            {common("cancel")}
                         </Button>
                         <Button type="submit" disabled={isUpdating}>
                             {isUpdating ? (
                                 <>
                                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                    Updating...
+                                    {t("form.updating")}
                                 </>
                             ) : (
                                 <>
                                     <Edit2 className="mr-2 h-4 w-4" />
-                                    Update Event
+                                    {t("form.updateEvent")}
                                 </>
                             )}
                         </Button>

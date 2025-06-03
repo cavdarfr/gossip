@@ -155,7 +155,9 @@ export function EventPageClient({ event, locale }: EventPageClientProps) {
                     </Badge>
                 );
             default:
-                return <Badge variant="outline">Unknown</Badge>;
+                return (
+                    <Badge variant="outline">{common("unknownStatus")}</Badge>
+                );
         }
     };
 
@@ -187,7 +189,7 @@ export function EventPageClient({ event, locale }: EventPageClientProps) {
                             <p className="text-lg text-muted-foreground">
                                 {event.description}
                             </p>
-                        <ReadingModeToggle />
+                            <ReadingModeToggle />
                         </div>
                     </div>
 
