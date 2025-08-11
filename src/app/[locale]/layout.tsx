@@ -18,6 +18,8 @@ import { Footer } from "@/components/footer";
 import { Button } from "@/components/ui/button";
 import "../globals.css";
 import { PlausibleAnalytics } from "@/components/analytics";
+import { ThemeProvider } from "@/components/theme-provider";
+import { ModeToggle } from "@/components/mode-toggle";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -136,75 +138,81 @@ export default async function LocaleLayout({ children, params }: Props) {
                 <body
                     className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
                 >
-                    <NextIntlClientProvider messages={messages}>
-                        <header className="bg-white/95 backdrop-blur-sm border-b border-gray-200/50 sticky top-0 z-50">
-                            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                                <div className="flex justify-between items-center h-20">
-                                    <div className="flex items-center space-x-8">
-                                        <Link
-                                            href="/"
-                                            className="text-2xl font-bold text-gray-900 whitespace-nowrap flex items-center gap-3 hover:opacity-80 transition-opacity"
-                                        >
-                                            {t("appName")}
-                                        </Link>
-                                        <SignedIn>
-                                            <nav className="hidden md:flex space-x-1">
-                                                <Link
-                                                    href="/dashboard"
-                                                    className="text-gray-600 hover:text-gray-900 hover:bg-gray-100 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200"
-                                                >
-                                                    {t("dashboard")}
-                                                </Link>
-                                            </nav>
-                                        </SignedIn>
-                                    </div>
-                                    <div className="flex items-center space-x-3">
-                                        <LanguageSwitcher
-                                            currentLocale={locale}
-                                        />
-                                        <SignedOut>
-                                            <div className="flex items-center space-x-2">
-                                                <SignInButton mode="modal">
-                                                    <Button
-                                                        variant="ghost"
-                                                        size="sm"
-                                                        className="text-gray-600 hover:text-gray-900"
+                    <ThemeProvider>
+                        <NextIntlClientProvider
+                            messages={messages}
+                            locale={locale}
+                        >
+                            <header className="bg-background text-foreground border-b border-border sticky top-0 z-50">
+                                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                                    <div className="flex justify-between items-center h-20">
+                                        <div className="flex items-center space-x-8">
+                                            <Link
+                                                href="/"
+                                                className="text-2xl font-bold text-gray-900 whitespace-nowrap flex items-center gap-3 hover:opacity-80 transition-opacity"
+                                            >
+                                                {t("appName")}
+                                            </Link>
+                                            <SignedIn>
+                                                <nav className="hidden md:flex space-x-1">
+                                                    <Link
+                                                        href="/dashboard"
+                                                        className="text-gray-600 hover:text-gray-900 hover:bg-gray-100 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200"
                                                     >
-                                                        {t("signIn")}
-                                                    </Button>
-                                                </SignInButton>
-                                                <SignUpButton mode="modal">
-                                                    <Button
-                                                        size="sm"
-                                                        className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-md"
-                                                    >
-                                                        {t("signUp")}
-                                                    </Button>
-                                                </SignUpButton>
-                                            </div>
-                                        </SignedOut>
-                                        <SignedIn>
-                                            <UserButton
-                                                appearance={{
-                                                    elements: {
-                                                        avatarBox:
-                                                            "h-10 w-10 ring-2 ring-blue-100 hover:ring-blue-200 transition-all",
-                                                        userButtonPopoverCard:
-                                                            "shadow-xl border-0",
-                                                        userButtonPopoverHeader:
-                                                            "bg-gradient-to-r from-blue-50 to-purple-50",
-                                                    },
-                                                }}
+                                                        {t("dashboard")}
+                                                    </Link>
+                                                </nav>
+                                            </SignedIn>
+                                        </div>
+                                        <div className="flex items-center space-x-3">
+                                            <ModeToggle />
+                                            <LanguageSwitcher
+                                                currentLocale={locale}
                                             />
-                                        </SignedIn>
+                                            <SignedOut>
+                                                <div className="flex items-center space-x-2">
+                                                    <SignInButton mode="modal">
+                                                        <Button
+                                                            variant="ghost"
+                                                            size="sm"
+                                                            className="text-gray-600 hover:text-gray-900"
+                                                        >
+                                                            {t("signIn")}
+                                                        </Button>
+                                                    </SignInButton>
+                                                    <SignUpButton mode="modal">
+                                                        <Button
+                                                            size="sm"
+                                                            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-md"
+                                                        >
+                                                            {t("signUp")}
+                                                        </Button>
+                                                    </SignUpButton>
+                                                </div>
+                                            </SignedOut>
+                                            <SignedIn>
+                                                <UserButton
+                                                    appearance={{
+                                                        elements: {
+                                                            avatarBox:
+                                                                "h-10 w-10 ring-2 ring-blue-100 hover:ring-blue-200 transition-all",
+                                                            userButtonPopoverCard:
+                                                                "shadow-xl border-0",
+                                                            userButtonPopoverHeader:
+                                                                "bg-gradient-to-r from-blue-50 to-purple-50",
+                                                        },
+                                                    }}
+                                                />
+                                            </SignedIn>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </header>
-                        <main className="flex-1">{children}</main>
-                        <Footer />
-                        <PlausibleAnalytics />
-                    </NextIntlClientProvider>
+                            </header>
+                            <main className="flex-1">{children}</main>
+                            <Footer />
+                            <PlausibleAnalytics />
+                        </NextIntlClientProvider>
+                    </ThemeProvider>
                 </body>
             </html>
         </ClerkProvider>

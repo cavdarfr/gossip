@@ -7,7 +7,7 @@ export function Footer() {
     const currentYear = new Date().getFullYear();
 
     return (
-        <footer className="bg-gray-900 text-white" role="contentinfo">
+        <footer className="bg-background text-foreground" role="contentinfo">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Main Footer Content */}
                 <div className="py-12">
@@ -19,7 +19,7 @@ export function Footer() {
                                     Gossip
                                 </span>
                             </div>
-                            <p className="text-gray-300 text-sm leading-relaxed max-w-md">
+                            <p className="text-muted-foreground text-sm leading-relaxed max-w-md">
                                 {t("description")}
                             </p>
                         </div>
@@ -29,7 +29,7 @@ export function Footer() {
                             <Button
                                 variant="outline"
                                 size="sm"
-                                className="border-gray-600 text-gray-300 hover:bg-white hover:text-gray-900"
+                                className="border-border text-muted-foreground hover:bg-primary hover:text-primary-foreground"
                             >
                                 <Github className="w-4 h-4 mr-2" />
                                 GitHub
@@ -37,7 +37,7 @@ export function Footer() {
                             <Button
                                 variant="outline"
                                 size="sm"
-                                className="border-gray-600 text-gray-300 hover:bg-white hover:text-gray-900"
+                                className="border-border text-muted-foreground hover:bg-primary hover:text-primary-foreground"
                             >
                                 <Twitter className="w-4 h-4 mr-2" />
                                 Twitter
@@ -47,9 +47,9 @@ export function Footer() {
                 </div>
 
                 {/* Bottom Section */}
-                <div className="border-t border-gray-800 py-6">
+                <div className="border-t border-border py-6 bg-card">
                     <div className="text-center">
-                        <div className="text-sm text-gray-400">
+                        <div className="text-sm text-muted-foreground">
                             <p className="flex items-center justify-center">
                                 &copy; {currentYear} Gossip. {t("madeWith")}{" "}
                                 <Heart className="w-4 h-4 mx-1 text-red-500" />
@@ -58,7 +58,7 @@ export function Footer() {
                                     href="https://cavdar.fr"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="text-blue-400 hover:text-blue-300 transition-colors ml-1"
+                                    className="text-primary hover:text-primary-foreground transition-colors ml-1"
                                 >
                                     cavdar.fr
                                 </a>
